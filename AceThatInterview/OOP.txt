@@ -1,0 +1,70 @@
+OBJECT ORIENTED PROGRAMMING 
+
+Class
+	- An extensible program-code-template for creating objects, providing
+	initial values for state (properties) and implementations of behavior (methods)
+
+Object
+	- An instance of a class or array
+Method
+	- A procedure (or a piece of code) associated with an object
+
+
+Virtual Method
+	- An inheritable and overridable function or method for which dynamic dispatch
+	is facilitated. By dynamic dispatch, it means the implementation of the function
+	is not present at the compile-time (but at runtime)
+Pure Virtual Method 
+	- A virtual method that is REQUIRED to be implemented by a derived class 
+	(ie. no implementation at all inside the base class)
+
+
+Class Methods
+	- The class of the object instance is implicitly passed as the first argument instead of self
+Static Methods
+	- Neither self nor the class of the object instance is implicitly passed as the first argument. They behave like plain functions except that you can call them from an instance or the class
+
+
+Instance Initializer
+	- Run before the constructor each time you instantiate an object
+Static Initializer
+	- Run once the class is loaded
+
+
+Constructor
+	- Prepares the new object for use, often accepting arguments that the constructor uses to set required member variables
+Destructor
+	- A method which is automatically invoked when the object is destroyed
+	- Can happen when its lifetime is bound to scope and the execution leaves the scope,
+	when it is embedded in another object which lifetime ends, or
+	when it was allocated dynamically and is released explicitly
+	- To free resources
+
+
+Superclass
+	- A class from which other classes are derived
+Subclass
+	- A derivative class that inherits entities from superclasses
+
+Inheritance
+	- When an object or class is based on another object or class
+Encapsulation
+	- A language mechanism for restricting direct access to some of the object's components
+	- A language construc that facilitates the bundling of data with the mehtods operating on that data
+Polymorphism
+	- The ability to present the same programming interface for differing underlying forms
+Abstraction
+	- A technique for arranging complexity of computer systems
+	- Establishes a level of complexity on which a person interacts with the system, suppressing the more complex details below the current level.
+
+SOLID Principles
+	Single Responsibility Principle
+		- A class should have only a single responsibility
+	Open/Closed Principle
+		- Software entities should be open for extension, but closed for modification
+	Liskov Substitution Principle
+		- Objects in a program should be replaceable with instances of their subtypes without altering the correctness of that program
+	Interface Segregation Principle
+		- Many client-specific interfaces are better than one general-purpose interface
+	Dependency Inversion Principle
+		- One should depend on abstractions. Do not depend upon concretions

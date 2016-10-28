@@ -1,0 +1,4 @@
+To compile:
+	tsc helloWorld.ts
+* Typescript still compiles even if it gives you errors. Warning is to let
+you know that the newly generated Javascript file might not run as expected

@@ -1,0 +1,61 @@
+LINKED LIST
+	
+	Linked List
+		Structure: -> first -> second -> third -> nullptr
+
+	Doubly Linked List
+		Structure: -> first <-> second <-> third <-> nullptr
+
+	Circularly Linked List
+		Structure: 
+			- Doubly Linked List with first and last nodes pointing each other
+			- No noded are designated as beginning or end
+			- Can be singly linked or doubly linked
+
+	Characteristics
+		- Allocates memory as needed
+		- Requires memory for pointers
+
+	Operation Time Complexity (Worst)
+		Random Access: O(n)
+		Sequential Access: O(1)
+		Insert: O(n)
+		Append: O(n)
+		Delete: O(n) for singly, O(1) for doubly 	// For singly linked list, we have to get the pointer from the previous node
+
+	Simple Implementation
+		{
+			class LinkedList{
+				struct Node{
+					double item;
+					Node* next;
+					Node(){ next = nullptr; }
+				};
+			}
+			Node *headPtr;
+
+			public:
+				LinkedList();
+				~LinkedList();
+		}
+
+	Merging Lists
+		- Tailptr of 1 -> Headptr of 2
+	Reversing a Linked List
+		m1. Copy
+		m2. For each node, reverse the direction starting from the headPtr
+
+	Iterators (Made with Linked Lists?)
+		input_iterator
+			- Read values with forward movement
+			- Can be incremented, compared, dereferenced
+		output_iterator
+			- Write values with forward movement. Can be incremented, dereferenced
+		forward_iterator
+			- Read or write with forward movement. Can be incremented, compared, dereferenced, and store the iterators value
+		bidirectional_iterator
+			- forward_iterator with decrement abilities
+		random_iterator
+			- bidirectional_iterator with pointer arithmetic and comparison abilities
+		reverse_iterator
+			- iterator adaptor whose ++ operation moves in reverse

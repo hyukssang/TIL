@@ -1,0 +1,152 @@
+LESSON 3: More about Swift
+
+Optional
+	- is basically an enum 
+		### Kind of like..
+			enum Optional<T>{
+				case None
+				case Some(T)
+			}
+		###
+	- can be chained
+		###
+			if let disp = display{
+				if let text = disp.text{
+					...
+				}
+			}
+
+			// Replaceable with
+			if let text = display?.text?.value{
+
+			}
+		###
+	- defaulting operator(??), when you want to put something into a variable???
+		###
+			let s: String? = ...
+			if s != nil{
+				display.text = s
+			}
+			else{
+				display.text = " "
+			}
+
+			// Replaceable with
+			display.text = s ?? " "
+		###
+
+Tuple
+	- used just like variables
+		###
+			let x: (String, Int, Double) = ("hello", 1, 0.5)
+			let (word, number, value) = x
+			print (word)				// prints hello
+		###
+
+		###
+			let x: (w: String, y: Int, z: Double) = ("hello", 1, 0.5)
+			print(x.w)					// prints hello
+			let (word, num, val) = x	// can re-assign names
+		###
+	- used to return multiple values from a function
+		###
+			func getSize() -> (w: Double, h: Double){return (250, 80)}
+			let x = getSize()
+			print(x.w)					// prints 250
+		###
+
+Data Structures (Class, Struct, Enum)
+	Differences
+		- Structs and Enums are pass-by-value, Classes are pass-by-reference
+	
+Value vs Reference
+	Value
+		- Structs, Enums, func parameters
+		- func can mutate a struct/enum marked with the keyword 'mutating'
+		- copied when passed as an argument to a function
+		- copied when assigned to a different variable
+		- immutable if assigned with 'let'
+	Reference
+		- Class
+		- constant pointers to a class (let) can still mutate its "pointing" objects 
+		by calling methods and changing properties
+		- when passed as an argument, does not make a copy
+	
+Methods
+	Internal names: names of the local variables you use inside the method
+	External names: names what callers use when they call the method
+		- if there are no external names present, internal is used by default 
+	'_' if you don't want callers to use an external name at all for a given parameter
+	'override' on func or var to override methods or properties
+	'final' on methods prevents subclasses from overriding
+	Types and instances can have methods/properties
+Properties
+	Property Observers
+		- observe changes in variables using 'didSet' and 'willSet'
+		- 'newValue' is the new value in 'willSet'
+		- 'oldValue' is the old value in 'didSet'
+		- for Objects: doesn't get called right after first initialization
+		  for IBOutlets: called when iOS hooks up this outlet at run time
+		  * refer to LESSON 5
+		- use this to update UI!
+	'lazy'
+		- does not get initialized until someone accesses it
+		- can't apply 'let'
+
+Array
+	Useful methods:
+		'filter'
+			- creates a new array with any "undesirables" filtered out
+			- function passed as an argument returns false if an element is undesirable
+				###
+					let bigNumbers = [2, 5, 3, 9].filter({$0 > 5})	// returns [9]
+		'map'
+			- creates a new array by transforming each element to something different
+			- the thing it is transformed to can be of a different type than what is in the Array
+				###
+					let stringified: [String] = [1,2,3].map({String($0)})	// returns 
+				###
+		'reduce'
+			- reduce an entire array into a single value
+				###
+					let sum: Int = [1,2,3].reduce(0) {$0 + $1}		// starts from index 0, adds up things
+				###
+
+String
+	Useful methods:
+		'startIndex', 'endIndex', 'hasPrefix', 'hasSuffix', 'capitalizedString', 'lowercaseString', 
+		'uppercaseString', 'componentsSeperatedByString'
+
+Initialization
+	- by init() is done, all properties must have values, except for optionals
+	- two types of inits: convenience and designated
+		Designated
+			- must (and can only) call a designated 'init' that is in its immediate super class
+			- must initialize all properties introduced by your class before calling a super class's 'init'
+			- must call super class's 'init' before you can assign a value to an inherited property
+		Convenience
+			- must (and can only) call an 'init' in its own class
+			- must call that init before it can set any property values
+
+	Inherited init
+		- if you don't implement any designated inits, you'll inherit all of the superclass's designateds
+		- if you override all of your superclass's inits, you'll inherit all of its convenience inits
+		- if you implement no inits, you'll inherit all of your superclass's inits
+
+	Required init
+		- 'required' makes subclasses to override these inits
+
+	Failable init
+		- 'init' with a trailing '?'
+		- may return nil
+
+AnyObject
+	- points to any class
+	- used to hide some information
+	- used to pass a vague argument to a func
+	- to use, must be converted to another, known class
+
+	'typealias'
+		- allows you to use another name for another object
+
+

@@ -1,0 +1,82 @@
+ENUM
+
+Using enums like C, an integer for each value:
+	###
+		enum Bird: Int{			// Specify the type of the enum
+			case Galah
+		    case Kookaburra
+		    case Other
+		}
+		print(Bird.Galah.rawValue)	// returns 0
+		print(Bird.Galah)			// returns "Galah\n", the name of the variable
+	###
+
+Using enums for other types:
+	###
+		enum Bird: String{
+			case Galah = "Galah"
+		    case Kookaburra = "Kookaburra"
+		    case Other = "Other"
+		}
+		print(Bird.Galah)			// returns "Galah\n"
+	###
+
+Assigning Protocols instead of types:
+	###
+		enum Bird: CustomStringConvertible{
+			case Galah
+		    case Kookaburra
+		    case Other
+
+		    // var must be implemented for Protocol CustomStringConvertible
+		    var description: String{						
+		    	switch self{
+					case .Galah: return "Galah"
+					case .Kookaburra: return "Kookaburra"
+					case .Other: return "Other"
+				}
+		    }
+		}
+		print(Bird.Galah)			// returns "Galah\n"
+	###
+
+Adding parameters to enums, and assigning values:
+	###
+		enum birds{
+			case Bird1
+			case Bird2(Int)
+			case Bird3(String, String)				// Receive parameters to use for values
+		}
+
+		let bird = birds.Bird3("s1", "s2")			// Bird3("s1", "s2") enum
+		
+		switch bird{
+		case .Bird1: print(1)
+		case .Bird2(let n): print(n)
+		case .Bird3(let n1, let n2): print(n1)		// n1 = "s1", n2 = "s2", prints out "s1"
+		}
+	###
+
+Adding parameters to enums, and using functions to assign values:
+	###
+		enum Bird: CustomStringConvertible{
+			case Galah
+		    case Kookaburra
+		    case Other(name: String)
+
+		    var description: String{
+		    	switch self{
+		    	case .Galah: return "Galah"
+		    	case .Kookaburra: return "Kookaburra"
+		    	case let Other(name): return name
+		    	}
+		    }
+		}
+		print (Bird.Other(name: "Cuckoo"))			// prints "Cuckoo"
+	###
+
+
+
+
+
+		

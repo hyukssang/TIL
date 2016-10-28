@@ -1,0 +1,36 @@
+CONTAINER
+
+	Allocation and Deallocation
+		Allocation
+			- new: default constructor to create an object
+			- new[]: default constructor for each object in an array
+
+		Deallocation
+			- delete: destructor to dispose of the object
+			- delete[]: destructor on each object in an array
+
+	What to Store in a Container
+		Value
+			- Data Ownership: Only container edits/deletes
+			- Drawback: Large objects take time to copy
+			- Usage: Most common
+		Pointer
+			- Data Ownership: Container or other object
+			- Drawback: Unsafe
+			- Usage: Used for char*, shared data
+		Reference
+			- Data Ownership: None; cannot delete by reference
+			- Drawback: Must be initialized but cannot be assigned to
+			- Usage: Impractical
+
+	What to Get from a Container
+		Value
+			- Note: Costly for copying large objects
+		Pointer
+			- Note: Unsafe, pointer may be invalid
+		Reference
+			- Note: Usually a good choice
+			{
+				int& getElt(int);
+			}
+	

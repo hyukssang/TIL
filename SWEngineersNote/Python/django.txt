@@ -1,0 +1,149 @@
+Django
+	Commands
+		django-admin startproject <projectname>
+			- creates a django project
+		python manage.py runserver
+			- runs the local server
+		python manage.py startapp <appname>
+			- creates an application
+		python manage.py makemigrations <appname>
+			- detects changes inside <appname>, makes preparation for changes to be
+			applied to the app, such as db
+		python manage.py migrate <appname>
+			- makes actual changes to the app
+		python manage.py shell
+			- shell prompt for django
+
+	Default file structure:
+		manage.py
+			- For running commands like "runserver", "migrate"
+		/<projectname>/settings.py
+			- For adding/removing/modifying changes, such as which DB to use,
+			where to find static files, which app to look for, etc.
+		/<projectname>/urls.py
+			- Where URL rules are specified
+
+	Creating an Application:
+		1. Run the command above
+		2. Register the app name inside settings.py at the section, "INSTALLED_APPS"
+
+	Defining a Model:
+		1. Create a class that inherits from models.Model
+		2. Define properties to be used and assign values from 'models' module
+		3. Define methods to be used for this model
+
+	DB Field Module List:
+	https://docs.djangoproject.com/en/1.8/ref/models/fields/#field-types
+		models.CharField		// For texts with a limit to length
+		models.TextField		// For texts without a limit to length
+		models.DateTimeField	// For dates and time
+		models.ForeignKey		// For a link to another model
+
+	Registering to Admin:
+		1. Open admin.py file inside the app
+		2. Import the model you want to manage
+		3. Register it!
+			###
+				from django.contrib import admin
+				from .models import Post
+
+				admin.site.register(Post)
+			###
+		4. Create a superuser to login by typing a command:
+			python manage.py createsuperuser
+
+	Adding a URL:
+		1. Create a urls.py folder inside the app
+		2. Create an array "urlpatterns", and register the new url regex
+			###
+				urlpatterns = [
+					url(r'^$', views.post_list, name='post_list'),
+				]
+			###
+			* no space between "name" and "="
+		3. Similarly, register the urls.py of the app to the project-level urls.py
+			###
+				url(r'', include('blog.urls'))	// Inside urls.py of project
+			###
+
+		* Django has a feature called named groups, which captures the value inside
+		regex and passes it to the view functions as keyword arguments rather than positional
+		arguments
+		(?P<varName><regexPattern>)
+
+	Adding a View:
+		1. Open views.py
+		2. Create a function to take care of incoming Http request
+			###
+				def post_list(request):
+				return render(request, 'blog/post_list.html', {})
+			###
+
+	Adding data to the Model using shell:
+		1. Run the command above to open up a shell
+		2. Import the model you want to change
+			###
+				from blog.models import Post	// Imports Post model inside /blog/models.py
+			###
+		3. Use the methods defined in the file OR use the methods inherited from models
+		to create/modify/delete data
+
+		* User model is at django.contrib.auth.models
+
+	Query Sets:
+	https://docs.djangoproject.com/en/1.8/ref/models/querysets/
+		<ModelName>.objects.all()
+			- Lists all the objects inside this models
+		<ModelName>.objects.create(<parameters>)
+			- Creates data to be stored in this model, uses parameters to fill in fields
+			###
+				Post.objects.create(author=me, title='Sample title', text='Test')
+			###
+
+		<ModelName>.objects.get(<parameters>)
+			- Grabs the instance of the specified
+		<ModelName>.objects.filter(<parameters>)
+			- Applies a filter based on the parameters specified, returns objects based on it
+			###
+				// "title" is a field name, "__" is an identifier that distinguishes
+				// fields from operators, "contains" is an operator
+				// Overall, this filter returns any objects with a word "Post" in the title
+				Post.objects.filter(title__contains='Post')
+			###
+		<ModelName>.objects.order_by(<fieldname>)
+			- Returns the objects in the model in order specified
+			###
+				Post.objects.order_by('created_date')	// order by "created_date" ascending order
+				Post.objects.order_by('-created_date')	// order by "created_date" descending order
+			###
+		* You can chain Query Sets
+
+	Mapping Model with a View:
+		1. Import the model we are getting data from
+		2. Get the data using QuerySet methods inside the function that renders the target HTML
+		3. Using 'render' function, include the data set as parameters
+		###
+			from django.shortcuts import render
+			from django.utils import timezone
+			from .models import Post
+
+			def post_list(request):
+				posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+				return render(request, 'blog/post_list.html', {'posts': posts})
+		###
+		4. Inside the html file, you can use the data sets using Jinja template
+			###
+				{% for post in posts %}
+					<div>
+						<h4>{{ post.title }}</h4>
+						<p>{{ post.text }}</p>
+						<p>{{ post.published_date }}</p>
+					</div>
+				{% endfor %}
+			###
+
+	Including static files:
+		1. Inside the app directory, create a folder called "static"
+		2. Create a css file to use ("style.css" for example)
+		3. Inside the html file, include '{% load staticfiles %}' at the very top
+		4. Add a link to css file, with the href value of '{% static 'css/style.css' %}'

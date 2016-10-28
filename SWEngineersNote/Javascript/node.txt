@@ -1,0 +1,8 @@
+Updating node:
+	sudo npm cache clean -f
+	sudo npm install -g n
+	sudo n stable
+
+Checking node/npm version:
+	sudo npm -v
+	sudo node -v

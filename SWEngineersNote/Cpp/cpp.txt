@@ -1,0 +1,16 @@
+g++
+
+g++ flags
+	-g		// turns on debugging
+	-Wall	// turns on most warnings
+	-O 		// optimization
+	-o <name>	// name of the output file
+	-c		// output an object file
+
+Compiling multiple files
+	###
+		% g++ -c -o foo.o foo.C 
+		% g++ -c -o main.o main.C
+		% g++ -c -o bar.o bar.C
+		% g++ -o fubar foo.o main.o bar.o -lm
+	###

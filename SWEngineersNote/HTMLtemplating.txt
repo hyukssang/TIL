@@ -1,0 +1,15 @@
+HTML templating with Django/Flask
+	Creating a template and applying it:
+		For a template ("base.html" for instance), mark with
+			{% block <contentName> %}
+			{% endblock %}
+		where you want different contents to fill in
+
+		To fill in the contents, inside the html you are extending the template,
+		include {% extends "<templatePath>" %}, then
+		place contents between {% block <contentName> %} and {% endblock <contentName>%}
+
+	Iterating the over a dictionary/array:
+		{% for <singleItem> in <dict/array> %}
+			{{ singleItem}}
+		{% endfor %}

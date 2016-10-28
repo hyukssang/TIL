@@ -1,0 +1,33 @@
+Swift Reference
+
+Getting user location
+1. Go to .plist, open it as Property List, click on + sign next to "Information Property List", include NSLocationAlwaysUsageDescription
+2. In the View Controller, include CLLocationManagerDelegate
+3. Inside ViewDidLoad:
+
+	let locationManager = CLLocationManager()
+
+	// Request the user for authorization for location service
+    self.locationManager.requestAlwaysAuthorization()
+
+    // Use this when you are only using location when the app is running in foreground
+   	self.locationManager.requestWhenInUseAuthorization()
+    
+    // If location service is enabled,     
+    if CLLocationManager.locationServicesEnabled(){
+        print("location enabled")
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest	// Accuracy of updated location
+        locationManager.startUpdatingHeading()						// Start updating the user's heading (direction)
+        locationManager.startUpdatingLocation()						// Start updating the user's location
+    }
+4. Outside ViewDidLoad:
+	
+	// Triggered whenever the user location is updated
+	func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        var usercoordinate = manager.location?.coordinate
+
+        // Show the user's current location in a region
+        var userlocation2d = CLLocationCoordinate2D(latitude: usercoordinate!.latitude, longitude: usercoordinate!.longitude)
+        mapview.setRegion(MKCoordinateRegion(center: userlocation2d, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
+    }

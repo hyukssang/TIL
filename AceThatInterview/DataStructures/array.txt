@@ -1,0 +1,32 @@
+ARRAY
+
+	Characteristics
+		- Wastes memory if size is too large
+		- Requires reallocation if too small
+
+	Operation Time Complexity
+		Random Access:	O(1)
+		Sequential Access: O(1)
+		Search:	O(n)
+		Insertion: O(n)
+		Append: O(n)
+		Deletion: O(n)
+
+	Declaration (C++)
+		m1. char s1[15] = "Hello ";	
+		m2. char s2[] = "World";
+		m3. char *x = "Hello ";
+
+		- Allocates space for specified number + 1, where last one is for null character
+		- Allocates memory on the stack (unless declared with dynamic memory allocation using new)
+		- Avoid fixed-length buffers for variable-length input
+		-> Source of 70% of security breaches
+
+	1D Array <-> 2D Array
+		1D -> 2D
+			- column = index % num_cols
+			- row = index / num_cols
+		2D -> 1D
+			- index = row * num_cols + col
+
+	

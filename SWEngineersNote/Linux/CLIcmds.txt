@@ -1,0 +1,17 @@
+Commands
+	date
+		- prints out current date and time
+	clear
+		- moves up the command line screen except for the current line
+	man [command]
+		- shows the manual of various linux commands
+	passwd
+		- changes the password of users
+	exit
+		- exits the terminal
+
+	scp [files] [host]:[path]
+		- copies and transfers files from local to remote server
+		###
+			scp disk.ln0 cshyuk@login.engin.umich.edu:/home/cshyuk/F16
+		###

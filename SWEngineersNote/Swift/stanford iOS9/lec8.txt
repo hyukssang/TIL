@@ -1,0 +1,102 @@
+Lecture 8: Multithreading and TextField
+
+Queues
+	- "serial" (one at a time) and "concurrent" (multiple things at once)
+	
+	Main Queue
+		- All UI activity MUST occur on this queue and this queue ONLY
+		- non-UI activity that is at all time consuming must NOT occur on that queue
+		- Make sure you are modifying the UI AFTER you are done loading things with different queues
+
+		{
+			let mainQ: dispatch_queue_t = dispatch_get_main_queue()
+			dispatch_async(<not the main queue>){
+				// do a non-UI, then..
+
+				dispatch_async(dispatch_get_main_queue()){
+					// call UI functions with the results of the above
+				}
+
+			}
+		}
+
+	Other queues
+		QOS_CLASS_USER_INTERACTIVE		// quick and high priority
+		QOS_CLASS_USER_INITIATED		// high priority, might take time
+		QOS_CLASS_UTILITY				// long running
+		QOS_CLASS_BACKGROUND			// user not concerned with this
+		let queue = dispatch_get_global_queue(<one of the above>, 0)	// 0 is a "reserved for future"
+
+		{
+			let queue: dispatch_queue_t = <Some Queue>
+			dispatch_async(queue){
+				// do something, no arg, no return
+			}
+		}
+
+	Own serial queue
+		- pretty high priority
+		- possibly for when you want to do something that takes lots of time to execute, while the user is doing nothing
+
+		{
+			let serialQ = dispatch_queue_create("name", DISPATCH_QUEUE_SERIAL)
+		}
+
+	* When using networks in different queues, make sure the last fetching data is the last one clicked 
+
+Spinner
+	1. Drag & put Activity Indicator View on a storyboard
+	2. Connect it to a ViewController as an Outlet
+	3. 	.startAnimating() to start the animation
+		.stopAnimating() to stop the animation
+		
+UITextField
+	Characteristics
+		- Just like UILabel, but editable
+	
+	Common Delegate methods
+		func textFieldShouldReturn(sender: UITextField) -> Bool		// What to do when the user hits Enter
+		func textFieldDidEndEditing(sender: UITextField)			// Sent when the text field resigns first responder
+	
+	Properties
+		var clearsOnBeginEditing: Bool
+		var adjustsFontSizeToFitWidth: Bool
+		var minimumFontSize: CGFloat				// always set this if you set adjustsFontSizeToFitWidth
+		var placeholder: String 					// drawn in gray when text field is empty
+		var background/disabledBackground: UIImage
+		var defaultTextAttributes: Dictionary 		// applies to entier text
+
+	Keyboard
+		- Keyboard appears when UITextField becomes the FirstResponder (automatically appears when it's tapped)
+			
+			Manual Activation: Make the UITextField the first responder by sending 'becomeFirstResponder'
+			
+			Deactivate: send 'resignFirstResponder' to the UITextField
+
+		- To customize Keyboard settings, you have to do it through UITextField
+			
+			UITextInputTraits protocol:
+				
+				var UITextAutocapitalizationType autocapitalization 		// words, sentences, etc
+				var UITextAutocorrectionType UITextAutocorrectionType		// yes or no
+				var UIReturnKeyType returnKeyType							// Go, Search, Google, Done, etc.
+				var BOOL secureTextEntry									// for passwords
+				var UIKeyboardType keyboardType								//ASCII, URL, PhonePad, etc.
+
+		- You may need to adjust your view positioning so that the keyboard does not block other views. Do this by reacting to the:
+			
+			UIKeyboard{Will, Did}{Show, Hide}Notifications sent by UIWindow
+
+			Register a method to get called when a named "event" occurs like this:
+				{
+					NSNotificationCenter.defaultCenter().addObserver(self, selector: "theKeyboardAppeared:", name: UIKeyboardDidShowNotification, object: view.window)
+					// Event is UIKeyboardDidShowNotification
+					// Object is the one who is causing the event to happen
+					// func theKeyboardAppeared(notification: NSNotification) will get called when the event happens
+					// notifications.userInfo will have details about the appearance
+				}
+
+
+
+
+			

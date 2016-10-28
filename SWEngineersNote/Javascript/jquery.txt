@@ -1,0 +1,406 @@
+Element Search
+	Basic Selector
+		*			// Every element
+		element	
+		#id
+		.class
+		selector1, selector2
+
+	Class Search
+		ancestor decendant
+		parent > child
+		previous + next
+		previous ~ siblings
+
+	Basic Filter
+		:not(selector)
+		:first
+		:last
+		:even
+		:odd
+		:eq(index)
+		:gt(index)
+		:lt(index)
+		:header
+		:animated
+		:focus
+
+	Contents Filter
+		:contains('text')
+		:empty
+		:parent
+		:has(selector)
+
+	Visibility Filter
+		:hidden
+		:visible
+
+	Child Element Filter
+		:nth-child(expr)
+		:first-child
+		:last-child
+		:only-child
+
+	Attribute Filter
+		[attribute]
+		[attribute='value']
+		[attribute!='value']
+		[attribute^='value']
+		[attribute*='value']
+		[attribute|='value']
+		[attribute~='value']
+		[attribute][attribute2]
+
+	Form Filter
+		:input
+		:text
+		:password
+		:radio
+		:checkbox
+		:submit
+		:image
+		:reset
+		:button
+		:file
+		:selected
+		:enabled
+		:disabled
+		:checked
+		:is 					// Checks if a form element is checked/selected
+
+
+jQuery Functions
+	Contents Filter
+		Contents
+			.html()
+			.text()				// Returns texts of the selected element and its children elements
+			.replaceWith()
+			.remove()
+
+		Element
+			.before()			### * <li> item </li> ###
+			.after				### <li> item </li> * ###
+			.prepend()			### <li> * item </li> ###
+			.append()			### <li> item * </li> ###
+			.remove()			// Remove (selected elements + child elements)
+			.clone()
+			.unwrap()			// Similar to .remove()??
+			.detach()			// Same as .remove(), but leaves a copy in memory
+			.empty()			// Similar to .remove()??
+			.add()
+
+		Attribute
+			.attr(attrName)					// To get the attribute value
+			.attr(attrName, attrValue)		// To change the attribute value
+			.removeAttr()
+			.addClass()
+			.removeClass()
+			.css(cssAttrName)
+			.css(cssAttrName, cssAttrValue)
+
+		Form value
+			.val()
+			.isNumeric()
+
+	Searching Elements
+		Basic
+			.find()
+			.closest()
+			.parent()
+			.parents()
+			.children()
+			.siblings()
+			.next()
+			.nextAll()
+			.prev()
+			.prevAll()
+
+		Filter/Test
+			.filter()
+			.not()
+			.has()
+			.is()
+			:contains()
+
+		Using index
+			.eq()
+			.lt()
+			.gt()
+
+	Size/Location
+		Size
+			.height()
+			.width()						// Content width
+			.innerHeight()
+			.innerWidth()					// Content width + padding
+			.outerHeight()
+			.outerWidth()					// Content width + padding + border width
+			.outerHeight(true)
+			.outerWidth(true)				// Content width + padding + border width + margin
+			$(document).height()
+			$(document).width()
+			$(window).height()
+			$(window).width()
+
+		Location
+			.offset()						// document 객체의 좌측 상단 모서리에서부터 요소까지의 좌표
+			.position()						// 상위 요소의 좌측 상단 모서리에서부터 요소까지의 좌표
+			.scrollLeft()
+			.scrollTop()
+
+	Effect/Animation
+		Basic
+			.show()
+			.hide()
+			.toggle()
+
+		Blur
+			.fadeIn()
+			.fadeOut()
+			.fadeTo()
+			.fadeToggle()
+
+		Sliding
+			.slideDown()
+			.slideUp()
+			.slideToggle()
+
+		Etc
+			.delay()
+			.stop()
+			.animate()
+				- Takes the form of: 	.animate({
+											// list css styles to be changed				
+										}[, speed][, easing][, complete]);
+				###
+					#('li').on('click', function(){
+						$(this).animate({
+							opacity: 0.0,
+							paddingLeft: '+=80'
+						}, 500, function(){
+							$(this).remove();
+						});
+					});
+				###
+
+
+	Event
+		Document/File
+			.ready()
+			.load()
+
+		User Interaction
+			.on()
+				- Takes the form of: .on(events[, selector][, data], function(e));
+				
+				###
+					$('ul').on(
+						'click mouseover',			// events
+						:not(#four),				// selector
+						{status: 'Important'},		// data
+						function(e){				// function
+
+						}
+					);
+				###
+
+----------------------------------------------------------------------------------
+
+Resolving conflicts with other JavaScript libraries
+	1. If jQuery (before) < other libraries
+		- replace $(document).ready() with jQuery(document).ready()
+
+		###
+			jQuery(document).ready(function(){
+				// code
+			});
+		###
+
+	2. If other libraries < jQuery (after)
+		- assign another name for $()
+
+		###
+			var $j = jQuery.noConflict();
+			$j(document).ready(function(){
+				// code
+			});
+		###
+
+Where to place <script>
+	1. Inside <head> (Not recommended)
+		- Slow page loading
+		- DOM contents not ready to be run by scripts
+	2. Somewhere between <body> (Not recommended)
+		- same as above
+	3. Right before </body>
+		- script doesn't interfere with downloading other contents
+		- DOM contents ready before running scripts
+
+Getting Document Ready
+	### using .ready()
+		$(document).ready(function(){
+			// code
+		});
+	###
+
+	### short form
+		$(function(){
+			// code
+		});
+	###
+
+Adding New Elements
+	1. Add a new element to a jQuery Object
+	2. Use one of .before(), .after(), .prepend(), .append() to add the new element to DOM
+
+	###
+		var	$newElem = $('<li>new Item</li>');
+		$('li:last').after($newElem);
+	###
+
+event Object in jQuery
+	# .type
+	# .which				// Pressed button or key
+	# .data
+	# .target
+	# .pageX, .pageY
+	# .timeStamp
+
+	# .preventDefault()
+	# .stopPropagation()
+
+Form event
+	- types of form events: blur, change, focus, select, submit
+
+Ajax
+	Request
+		Methods
+			# .load('htmlURL, selector')									// Loads html content at the selected place
+			# $.get(url[, data][, callback][, type])			
+			# $.post(url[, data][, callback][, type])
+			# $.getJSON(url[, data][, callback])
+			# $.getScript(url[, callback])
+			# $.ajax()
+				- Possible parameters:
+					type
+					url
+					data
+					success
+					error
+					beforeSend
+					complete
+					timeout
+
+	Response
+		jqXHR Properties
+			# responseText
+			# responseXML
+			# status
+			# statusText
+
+		jqXHR Methods
+			# .done()
+			# .fail()
+			# .always()
+			# .abort()
+
+	Form Data
+		# .serialize()
+			- Takes all the data inside the selected form (leaving out the unfilled out fields), 
+			turns them into a string to be sent to a server
+			- Encodes all the characters that cannot be used in the query string
+
+			###
+				$('#register').on('submit', function(e){
+					e.preventDefault();
+					var details = $('#register').serialize();
+					$.post('register.php', details, function(data){
+						$('#register').html(data);
+					});
+				});
+			###
+	**
+	- If you are sending json data to the server, set contentType to 'application/json; charset=UTF-8'
+	- If you are receiving json data from the server, set dataType to 'json' (not necessary if you are sending json)
+
+API
+	Geolocation
+		navigation.geolocation Object
+			# getCurrentPosition(success, fail) 
+				- Asks for the user's current location.
+				- 'success' parameter: function to be called upon success. returns Position object to the callback function
+				- 'fail' parameter: function to be called upon failure. returns PositionError object to the callback function
+		Position Object
+			Position.coords.(prop/method)
+			# .latitude
+			# .longitude
+			# .accuracy
+			# .altitude
+			# .altitudeAccuracy
+			# .heading
+			# .speed
+			# .timestamp
+
+		PositionError Object
+			PositionError.(prop/method)
+			# .code					// Returns error code
+			# .message
+
+	Web Storage
+		localStorage Object
+			localStorage.(prop/method)
+			# .setItem(key, val)			// Saves data in the storage
+			# .getItem(key)					// Retrieves data in the storage
+											// Can use . instead
+			# .removeItem(key)
+			# .clear()
+
+			# .length						// Returns the number of keys inside the storage
+
+		sessionStorage Object
+
+	History
+		history Object
+			history.(prop/method)
+			# .back()
+			# .forward()
+			# .go()
+			# .pushState(state, title, url)		// Adds a new entry into history Object
+			# .replaceState(state, title, url)
+
+			# .length
+
+			# window.onpopstate			
+				- used to call the function that loads contents
+
+
+Creating jQuery Elements
+	###
+		$('<div/>', {id: 'id', className: 'class'});
+		// This gives you
+		// <div id="id" class="class"></div>
+	###
+
+Adding multiple jQuery Elements
+	###
+		var elements = $();
+		for(var i = 0; i < elems.length; i++){
+			elements = elements.add(elems[i]);
+		}
+		$('body').append(elements);
+
+Checking if an element exists:
+	###
+		if($(element).length){
+			// code here
+		}
+	###
+
+
+
+
+
+
+
+
+

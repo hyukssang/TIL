@@ -1,0 +1,18 @@
+MERGESORT
+
+	Characteristics
+		- Combining two ordered files to make one larger ordered file
+
+	Order of Execution
+		Top-Down
+			1. Recursively divide an array into two arrays
+			2. When you are at the point where arrays are of length <= 1, start merging two arrays with their items sorted in a combined array, return the new array
+		Bottom-Up
+			1. Directly start at the bottom, proceed upwards by iterating over the pieces and merging them.
+			(Basically Top-Down w/o the recursively going down the tree part)
+
+	Performance
+		Time
+			- Best, Average, Worst: O(nlogn)
+		Memory
+			- O(n) additional memory (from creating new arrays to be copied from existing at each step)

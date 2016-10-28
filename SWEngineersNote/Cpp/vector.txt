@@ -1,0 +1,5 @@
+resize()
+	- insert or delete appropriate number of elements to the vector to make it given size
+
+reserve()
+	- only allocates memory, but leaves the spaces uninitialized (i.o.w, need to be pushed)

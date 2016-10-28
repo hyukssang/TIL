@@ -1,0 +1,27 @@
+iOS----------------------------------------------------------------------
+
+To push:
+	###
+		let fireRootRef = FIRDatabase.database().referenceFromURL("https://baguni-192c1.firebaseio.com/")
+		fireRootRef.updateChildValues([
+			"key": "value"
+		])
+	###
+To retrieve:
+	###
+		let fireRootRef = FIRDatabase.database().referenceFromURL("https://baguni-192c1.firebaseio.com/")
+		// Sorts the data under root by the child key "user"
+		fireRootRef.queryOrderedByChild("user")
+		// Grabs the data with the specified value within sorted
+		.queryEqualToValue(FIRAuth.auth()?.currentUser?.email)
+		// Gets the snapshot of the queried data
+		.observeEventType(.Value, withBlock: { (snapshot: FIRDataSnapshot) in
+			for child in snapshot.children{
+				let childSnapshot = child as! FIRDataSnapshot
+				someDict[childSnapshot.key] = childSnapshot.value as! [String:String]
+			}
+		})
+	###
+
+	* Make sure you know the types of the data you are retrieving. If the data you are trying
+	to retrieve is mixed with integers and strings, it might cause an error when assigning it to a variable

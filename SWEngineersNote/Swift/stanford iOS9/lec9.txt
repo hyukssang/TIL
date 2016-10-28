@@ -1,0 +1,107 @@
+LECTURE 9: UITableView
+
+UITableView
+	
+	Structure
+		[Table Header]
+			[Section Header]
+				[Row (Cell)]
+			[Section Footer]
+		[Table Footer]
+
+	Style Type
+		.Plain vs .Grouped (Has sections or not)
+	
+	Cell Type
+		.Subtitle
+		.Basic
+		.Right Detail
+		.Left Detail
+
+	Cells
+		Static cells
+			- These cells are set up in the Storyboard only
+
+	UITableViewDataSource
+		- Controls how the UITableView's data is displayed
+		- Must implement these:
+			func tableView(sender: UITableView, numberOfRowsInSection: Int)->Int
+			func numberOfSectionsInTableView(sender: UITableView)->Int
+			cellForRowAtIndexPath
+
+	Preparing to segue from a row in a tableView
+		{
+			func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?){
+				if let identifier = segue.identifier{
+				 	switch identifier{
+				 		case "XYZSegue":
+				 		case "ABCSegue":
+				 			if let cell = sender as? MyTableViewCell,
+				 				let indexPath = tableView.indexPathForCell(cell){
+				 				let seguedToMVC = segue.destinationViewController as? MyVC{
+				 					seguedToMVC.publicAPI = data[indexPath.section][indexPath.row]
+				 				}
+				 			}
+				 		default: break
+				 	}
+				}
+			}
+		}
+
+	UITableViewDelegate
+		- Controls how the UITableView is displayed (not the data it displays)
+		- Lets you observe what the tableView is doing (ie. user selecting a row)
+		- Common methods:
+			// Called when a row is selected
+			func tableView(sender: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+			// Called when Detail Disclosure button is touched
+			func tableView(UITableView, accessoryButtonTappedForRowWithIndexPath: NSIndexPath)
+
+	Other useful methods
+		When model changes
+			For all rows
+				func reloadData()
+				// Causes the UITableView to call numberOfSectionsInTableView and numberOfRowsInSection all over again and then cellForRowAtIndexPath on each visible row
+			
+			For a single row
+				func reloadRowsAtIndexPaths(indexPaths: [NSIndexPath], withRowAnimation: UITableViewRowAnimation)
+				// When you want to change only certain rows
+
+		Controlling the height of rows
+			Fixed height
+				tableView.rowHeight
+			Autolayout
+				tableView.estimatedRowHeight = tableView.rowHeight
+				// Gives an estimate of how high each row is going to be
+				tableView.rowHeight = UITableViewAutomaticDimension	
+				// Not efficient for a big table
+						
+				
+
+
+* Wrapping text inside a label: Set number of lines to 0
+* Content Hugging Priority: Content does not want to grow when this is a high number
+* Content Compression Resistance Priority: Content does not want to shrink
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

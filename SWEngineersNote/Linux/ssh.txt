@@ -1,0 +1,4 @@
+# To login to a remote computer
+	ssh [host]
+	- login-course.engin.umich.edu # for on and off campus
+	- oncampus-course.engin.umich.edu # for on campus only

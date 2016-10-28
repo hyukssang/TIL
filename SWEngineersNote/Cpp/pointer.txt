@@ -1,0 +1,27 @@
+Pointers
+
+* (reference operator)
+	- when used on variable initialization: 
+		creates a pointer that points to the address of the variable assigned
+		### 
+			int target = 5;
+			int* intptr = &target;					// intptr points to the address target is stored inside
+		###
+	- when used on a pointer:
+		retrieves the value from the address a pointer is pointing to
+		###
+			cout << *intptr << "\n";				// prints out "5"
+		###
+
+& (dereference pointer)
+	- when used on a pointer:
+		retrieves the address of the pointer
+	- when used on a variable:
+		retrieves the address of the variable
+
+Array
+	- Creating an array equals to creating a pointer that points to the first element in an array
+		###
+			int arr[5] = {1,2,3,4,5};
+			// 'arr' is a pointer that points to the address of "1"
+		###

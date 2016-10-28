@@ -1,0 +1,51 @@
+LESSON 6: Multiple MVCs, Segues
+
+Segues
+	- Things done inside prepareForSegue are done before IBOutlets are created. 
+	  So, pass models for the IBOutlets to use to draw UI
+
+View Controller Lifecycle (In order)
+	Instantiation
+
+	awakeFromNib
+		- sent to all objects that come out of a storyboard
+		- happens before outlets are set
+
+	Segue preparation
+
+	Outlets setup
+
+	viewDidLoad()
+		- loaded only once
+		- set UI here
+		- BUT geometry of your view is not set, so do not initialize things 
+		that are geometry dependent here
+
+	viewWillAppear()
+		- do something here if things your display is changing while your MVC is off screen
+		- could use this to optimize performance by waiting until this method is called
+		to kick off an expensive operation
+		- geometry is set here, but use some other place
+	viewDidAppear()
+		- good place to do animation
+
+	viewWillDisappear()
+		- do some clean up, now that we've been removed from the screen
+		- don't do something time-consuming here, maybe use a thread
+	viewDidDisappear()
+
+	viewWillLayoutSubviews()
+	viewDidLayoutSubviews()
+		- good place to do geometry dependent stuff
+		- autolayout happens somewhere between these two methods
+		- anytime after viewDidLoad()
+		* might be called more often that you imagine (not just initialization)
+
+	viewWillTransitionToSize()
+		- if you want to participate in the rotation animation
+
+	didReceiveMemoryWarning
+		- called when memory is low
+
+
+

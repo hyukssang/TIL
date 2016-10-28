@@ -1,0 +1,83 @@
+LESSON 5: IB, Gestures
+
+@IBDesignable 
+	- Use this decorator to actually checkout drawings on the storyboard
+@IBInspectable
+	- Use this decorator to try out different attributes on the storyboard
+	- Works for variables that have explicitly set types
+
+Gestures
+	UIGestureRecognizer
+		- Abstract class
+		- To use:
+			1. Add a gesture recognizer to a UIView
+			(only a View can recognize gestures, not Controllers or anything else)
+			2. Provide a method to handle that gesture
+
+			###
+				@IBOutlet weak var pannableView: UIView{
+					didSet{
+						let recognizer = UIPanGestureRecognizer(target: self, action: #selector(ViewController.pan(_:)))
+						pannableView.addGestureRecognizer(recognizer)
+					}
+				}
+				func pan(gesture: UIPanGestureRecognizer){
+					switch gesture.state{
+						case .Changed: fallthrough
+						case .Ended:
+							let translation = gesture.translationInView(pannableView)
+							gesture.setTranslation(CGPointZero, inView: pannableView)
+						default: break
+					}
+				}
+			###
+		- .Possible -> .Recognized -> .Began, .Changed, .Ended
+		- .Failed, .Cancelled
+
+	UIPanGestureRecognizer
+		func translationInView(UIView) -> CGPoint	// cumulative since start of recognition
+		func velocityInView(UIView) -> CGPoint		// how fast is the finger moving
+		func setTranslation(CGPoint, inView: UIView)// allows you to reset the translation so far
+
+	UIPinchGestureRecognizer
+		var scale: CGFloat				// not read-only
+		var velocity: CGFloat { get }	// scale factor per second
+		* if you want something to scale up incrementally as you pinch out, set this to 1 inside the
+		func associated with gesturerecognizer
+
+	UIRotationGestureRecognizer
+		var rotation: CGFloat			// not read-only; in radians
+		var velocity: CGFloat { get }	// radians per second
+
+	UISwipeGestureRecognizer
+		var direction: UISwipeGestureRecognizerDirection	// which swiped you want
+		var numberOfTouchesRequired: Int 					// finger count
+
+	UITapGestureRecognizer
+		var numberOfTapsRequired: Int 		// single tap, double tap, etc.
+		var numberOfTouchesRequired: Int 	// finger count
+
+ViewControllers with multiple MVCs
+	
+	var viewControllers: [UIViewController]? {get set}
+		- for a tab bar, in order, left to right, in the array
+		- for a split view, [0] is the master and [1] is the detail
+		- for a navigation controller, [0] is the root and the rest are in order on the stack
+
+	UISplitViewController
+		- two MVCs: Master(small window), Detail(larger window)
+	UINavigationController
+		- pushes and pops MVCs off of a stack
+		  push - new MVC on top; pop - MVC on top thrown away completely
+		- 'navigationItem' settings in the header
+		- 'toolbarItems' to add MVC-specific buttons
+		- 'rootViewController' first MVC
+
+
+
+
+
+
+
+
+

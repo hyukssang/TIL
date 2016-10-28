@@ -1,0 +1,463 @@
+'let'
+	- Objects: You can change the object's properties or call methods on it,
+	but you can't assign a different object to that identifier
+	- Arrays, Dicts: They become immutable; Can't assign new values, or change any value
+
+Controller Hierarchy
+	TabBarController
+		NavigationController
+			UITableViewController
+			Other views on NavigationController stack
+		Other views on TabBarController stack
+
+Parameters:
+	1. Default parameter:
+		- constant values by default, can't change it
+	2. Variadic parameter:
+		- accepts zero or more values of a specified type
+		###
+			func sum(numbers: Double...) -> Double{			// numbers is an array parameter
+				var total: Double = 0
+				for number in numbers{
+					total += number
+				}
+				return total
+			}
+			sum(1, 2, 3)									// returns 6
+		###
+	3. Variable parameter:
+		- able to change parameter values within the function
+		###
+			func changeString(var string: String) -> String{
+				string = "-----" + string
+			}
+			let originalString = "string"
+			let newString = changeString(originalString)	// "-----string"
+
+
+Webview:
+	1. Create an instance of NSURL to supply an url for the webview to use
+		###
+			let tempURL:NSURL = NSURL(string: "http://google.com")!
+		###
+	2. Create an instance of NSURLRequest to setup a URL request
+		###
+			let urlRequest = NSURLRequest(URL: tempURL)
+		###
+	3. Connect to a given URL by initiating an asynchronous client request.
+		###
+			webview.loadRequest(urlRequest)
+		###
+	4. Allow the use of scroll by setting .userInteractionEnabled to true
+		###
+			webview.userInteractionEnabled = true
+		###
+
+View Transition
+	1.
+		i) Give the second ViewController a storyboard ID
+		ii) Inside the first ViewController, instantiate the ViewController to make
+		a transition to (in this case SecondViewController)
+			###
+				let targetVC = self.storyboard!.instantiateViewControllerWithIdentifier("SecondVCStoryboardID")
+				// This looks for the matching ViewController ID inside Main.storyboard
+
+				// If you are making a transition to ViewController in another storyboard, use
+				let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+				let targetVC = storyboard.instantiateViewControllerWithIdentifier("SecondVCStoryboardID")
+			###
+		iii) Specify the animation style to be used in the transition
+			###
+				targetVC.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
+			###
+		iv) Make a transition!
+			###
+				self.presentViewController(targetVC, animated: true, completion: nil)
+			###
+
+		* To unwind, inside the second ViewController, call:
+			###
+				self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+				// self.presentingViewController represents the ViewController that presented
+				// the current ViewController
+			###
+
+	2. Using NavigationController
+		i) Select the ViewController to attach NavigationController, and select
+		[Editor] - [Embed in] - [NavigationController]
+		ii) Inside the first ViewController, call:
+			###
+				if let targetVC = self.storyboard!.instantiateViewControllerWithIdentifier("SecondVCStoryboardID"){
+					self.navigationController?.pushViewController(targetVC, animated:true)
+					// self.navigationController returns nil if the ViewController is not connected to
+					// a navigationController
+				}
+			###
+
+		* Can't be unwind with dismissViewControllerAnimated. Unwind with popViewControllerAnimated
+
+	3. Using Segue
+		i) ctrl+drag from the dock of the first ViewController to the second ViewController.
+		ii) Inside the first ViewController call:
+			###
+				performSegueWithIdentifier("SegueName", sender: self)
+			###
+		iii) Change the transition style in the storyboard
+
+		* To unwind, if a segue exists from the first ViewController to the second ViewController,
+			i) ctrl+drag from the second ViewController source(eg. button) to "Exit" at dock of the second ViewController
+
+		** To unwind, if a segue does not exist from the first ViewController to the second ViewController,
+			i) Create an IBAction in the ViewController we are unwinding to
+			ii) Inside the ViewController we are unwinding from, ctrl+drag from ViewController
+			icon to Exit icon
+			iii) On the left panel at Main.storyboard click "Unwind segue..." and give the segue
+			a name
+			iv) Inside the ViewController we are unwinding from, call the function
+			self.performSegueWithIdentifier()
+
+		*** This method works for unwinding several pages at once
+
+	4. Using Custom Segue
+		i) Create a .swift file with a custom class that inherits from UIStoryboardSegue
+		ii) Implement the override func perform()
+		iii) Inside perform(), declare two variables: one for sourceVC, another for destinationVC
+			###
+				let sourceVC = self.sourceViewController
+				let destVC = self.destinationViewController
+			###
+		iv) Call UIView.transitionFromView()
+			###
+				UIView.transitionFromView(sourceVC.view, toView: destVC.view, duration: 2,
+				options: UIViewAnimationOptions.TransitionCurlDown, completion: nil)
+			###
+
+		* This only changes the view, not the ViewController, so a NavigationBar wouldn't change
+
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+		- This is used to do stuff before changing screens/VCs
+
+	function call order: SecondVC init - prepareForSegue - SecondVC viewDidLoad - FirstVC IBAction
+
+Passing Data through Transitions
+	1. Data Transfer between VCs with manual/action segues
+		- Overwrite prepareForSegue() function, which is called before the actual segue action occurs
+		###
+			// Inside First ViewController
+			override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+				if let destVC = segue.destinationViewController as? TargetViewController{
+					destVC.someVariable = self.someVariable
+				}
+			}
+		###
+	2. Data Transfer between VCs with a Navigation Controller inbetween
+		- Same as 1, but use topViewController property of UINavigationController
+		###
+			// Inside First ViewController
+			override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+				if let navVC = segue.destinationViewController as? UINavigationController{
+					let destVC = navVC.topViewController as! TargetViewController
+					destVC.someVariable = self.someVariable
+				}
+			}
+		###
+
+Tableview
+	- Must inherit from: UITableViewDataSource, UITableViewDelegate
+
+	UITableViewDataSource
+		required:
+			i) func numberOfSectionsInTableView(tableView: UITableView) -> Int
+				// specifies the number of sections in a tableview
+			ii) func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+				// specifies the number of rows in each section
+			iii) func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+				// specifies the cell to draw for each row
+				###
+					func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+						let cell = tableView.dequeueReusableCellWithIdentifier(cellidentifier, forIndexPath: indexPath)
+						// additional setup
+						return cell
+					}
+
+	UITableViewDelegate
+		- Every function is optional
+
+	Custom UITableViewCell
+		- allows you to include multiple views within each cell
+		- awakeFromNib() called upon init of each cell, setSelected() for each view included within
+		- to add a function to be called for buttons inside each cell,
+			###
+				cell.button.addTarget(self, action: "buttonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+				// this function attaches another function called "buttonClicked(argument)" to be called
+				// when this button is clicked (or other interaction method specified for forControlEvents argument)
+			###
+		- steps:
+			i) Create a custom UITableViewCell swift class
+			ii) When defining func tableView(tableView: UITableView, cellForRowAtIndexPath..),
+				cast the cell declared with tableView.dequeueReusableCellWithIdentifier as the
+				custom cell class
+				###
+					let cell = tableView.dequeueReusableCellWithIdentifier(cellidentifier, forIndexPath: indexPath) as! CustomTableViewCell
+				###
+			iii) Set things
+				###
+					cell.title.text = "Custom Title"
+					cell.button.setTitle = "Custom Button Title"
+				###
+			iv) Return the cell
+
+	Interaction with Selected Rows
+		- To get selected row from outside of tableview functions:
+			###
+				let selectedRow = self.tableOfInfo.indexPathForSelectedRow
+				let selectedCell = self.tableOfInfo.cellForRowAtIndexPath(selectedRow!)
+			###
+	To reload the tableview:
+		###
+			tableview.reloadData()
+		###
+	To erase empty cells:
+		###
+			tableView.tableFooterView = UIView()
+		###
+
+CollectionView
+	- Must inherit from UICollectionViewDataSource, UICollectionViewDelegate
+	- Setup identical to UITableView
+
+	- Change layouts for the CollectionView assigning a custom UICollectionViewFlowLayout
+		###
+			// Gets the current screen width
+			let screenWidth = UIScreen.mainScreen().bounds.width
+			// Calculates the margin to be used for the entire CollectionView, between cells
+			let sectionMargin: CGFloat = (screenWidth - CGFloat(285))/CGFloat(3)
+
+			let layout = UICollectionViewFlowLayout()
+			// sectionInset specifies the margin of the CollectionView
+
+			// top, left, bottom, right order
+			layout.sectionInset = UIEdgeInsetsMake(0, sectionMargin, 0, sectionMargin)
+			// minimumInteritemSpacing specifies the spacing between cells
+			layout.minimumInteritemSpacing = sectionMargin
+			// itemSize specifies the size of each cell
+			layout.itemSize = CGSize(width: 142, height: 121)
+
+			// Assign the newly created layout to the CollectionView you are using
+			self.collectionView.collectionViewLayout = layout
+		###
+	- When writing custom CollectionViewCell class, override func prepareForReuse() like:
+		###
+			// To prevent the app from reusing wrong images for the newly created cells
+			override func prepareForReuse() {
+				self.imageView.image = nil
+			}
+		###
+
+Creating a Modal
+	1. Create the modal in a new ViewController
+	2. Either using storyboard or Swift:
+		i) Set the background color of the new ViewController to ClearColor
+		ii) Set opaque property of the UIView to false (uncheck)
+		iii) Set the new ViewController's Presentation property as Over Current Context
+	3. Hook up transition like you would for normal ViewControllers
+
+UIAlertController
+	1. Create an instance of UIAlertController to display over the current ViewController
+		###
+			let alertController = UIAlertController(title: "Alert Title", message: "Alert Message", preferredStyle: .Alert)
+		###
+	2. Create instances of UIAlertAction to use as buttons for UIAlertController
+		###
+			let saveAction = UIAlertAction(title: "Save", style: .Default) { (action: UIAlertAction) -> Void in
+				// code
+			}
+			let cancelAction = UIAlertAction(title: "Cancel", style: .Default) { (action: UIAlertAction!) in
+				// code
+			}
+		###
+	3. (Optional) Add a textfield inside the UIAlertController
+		###
+			alertController.addTextFieldWithConfigurationHandler{
+				(textField: UITextField) -> Void in
+			}
+		###
+	4. Attach the actions to the Controller
+		###
+			alertController.addAction(saveAction)
+			alertController.addAction(cancelAction)
+		###
+	5. display the UIAlertController over the current ViewController
+		###
+			presentViewController(alertController, animated: true, completion: nil)
+		###
+
+Tab Bar Controller
+	- Can't chain additional View Controllers. After the ViewControllers that are in
+	direct relationship with the Tab Bar Controller, tabs no longer appear. Use NavigationController
+
+Making a transparent(or semi-transparent) navigation bar
+	1. Create a class that inherits UINavigationController
+	2. To make the navigation bar completely transparent, set background image nil
+		###
+			self.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+			// Optional
+			self.navigationBar.shadowImage = UIImage()
+			self.navigationBar.translucent = true
+		###
+	3. To make the navigation bar semi-transparent, set background color, alpha
+		###
+			self.navigationBar.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+		###
+
+Custom UIView
+	###
+		import UIKit
+
+		@IBDesignable class ShippingAddressView: UIView {
+
+			var view: UIView!
+
+			var nibName: String = "ViewName"
+
+			override init(frame: CGRect) {
+				super.init(frame: frame)
+				setup()
+			}
+			required init?(coder aDecoder: NSCoder) {
+				super.init(coder: aDecoder)
+				setup()
+			}
+			func setup(){
+				view = loadViewFromNib()
+				view.frame = bounds
+				view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+				addSubview(view)
+			}
+			func loadViewFromNib()->UIView{
+				let bundle = NSBundle(forClass: self.dynamicType)
+				let nib = UINib(nibName: nibName, bundle: bundle)
+				let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
+
+				return view
+			}
+		}
+	###
+
+Chat UI using JSQMessagesViewController:
+	1. Install JSQMessagesViewController by including "pod 'JSQMessagesViewController'" to Podfile
+	2. Create a ViewController that inherits from JSQMessagesViewController
+	3. Create an array of JSQMessage objects, two imageviews to define incoming and outgoing message bubbles
+		###
+		var messages = [JSQMessage]()
+		var incomingMessageImageView: JSQMessagesBubbleImage!
+		var outgoingMessageImageView: JSQMessagesBubbleImage!
+		###
+	4. Set the variables "senderId" and "senderDisplayName" to reflect the current user
+	5. Create a function to setup bubbles
+		###
+			let factory = JSQMessagesBubbleImageFactory()
+			self.incomingMessageImageView = factory.incomingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleGreenColor())
+			self.outgoingMessageImageView = factory.outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleRedColor())
+		###
+	6. Implement the following functions
+		###
+			override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+				return messages.count
+			}
+			override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
+				return messages[indexPath.item]
+			}
+			override func collectionView(collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
+				let message = messages[indexPath.item]
+				if message.senderId == senderId{
+					return outgoingMessageImageView
+				}
+				else{
+					return incomingMessageImageView
+				}
+			}
+			override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
+				return nil
+			}
+
+			override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
+				let firMessageRef = self.firMessagesRef.childByAutoId()
+				let eachMessage = [
+					"text": text,
+					"senderID": senderId
+				]
+				firMessageRef.setValue(eachMessage)
+				JSQSystemSoundPlayer.jsq_playMessageSentSound()
+				finishSendingMessage()
+			}
+			func addMessage(id: String, text: String){
+				let message = JSQMessage(senderId: id, displayName: "", text: text)
+				messages.append(message)
+			}
+			private func observeMessages(){
+				let messagesQuery = self.firMessagesRef.queryLimitedToLast(25)
+				messagesQuery.observeEventType(.ChildAdded) { (snapshot: FIRDataSnapshot) in
+					let id = snapshot.value!["senderID"] as! String
+					let text = snapshot.value!["text"] as! String
+
+					self.addMessage(id, text: text)
+					self.finishReceivingMessage()
+				}
+			}
+		###
+	7. Call methods appropriately inside ViewDidLoad, ViewDidAppear, ViewWillAppear
+
+	Extra:
+	- To move the inputToolbar above the tabBar:
+		###
+			self.edgesForExtendedLayout = UIRectEdge.None
+		###
+	- To hide the media button:
+		###
+			self.inputToolbar.contentView.leftBarButtonItem = nil
+		###
+
+		self.hidesBottomBarWhenPushed = true;
+		self.inputToolbar.contentView.textView.becomeFirstResponder()
+
+
+Async -> Sync
+	###
+		var wait = dispatch_group_create()
+		dispatch_group_enter(wait)
+		print(0)
+		let test = self.firUsersRef.child(self.firUser.uid).child("chatRooms")
+		self.firUsersRef.child(self.firUser.uid).child("chatRooms").observeSingleEventOfType(.ChildAdded) { (snapshot: FIRDataSnapshot) in
+			print(1)
+			self.curChatRoomID = snapshot.key
+			let firMessagesRef = self.firChatRoomsRef.child(self.curChatRoomID)
+			firMessagesRef.queryLimitedToLast(25).observeEventType(.ChildAdded, withBlock: { (snapshot: FIRDataSnapshot) in
+				print(2)
+				let id = snapshot.key
+				let senderID = snapshot.value!["senderID"] as! String
+				let text = snapshot.value!["text"] as! String
+
+				self.addMessage(id, senderID: senderID, text: text)
+				self.finishReceivingMessage()
+				dispatch_group_leave(wait)
+			})
+		}
+		dispatch_group_notify(wait, dispatch_get_main_queue()) {
+			print("finished")
+		}
+	###
+
+Adding a GestureRecognizer
+	1. Declare a GestureRecognizer
+		###
+			let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressGesture:")
+		###
+	2. Attach the GestureRecognizer to the target view
+		###
+			cell.addGestureRecognizer(gestureRecognizer)
+		###
+
+Adding an Action
+	1. Create a function to be called when an action occurs
+		###

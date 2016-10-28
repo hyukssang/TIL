@@ -1,0 +1,12 @@
+Installation: 
+	pip install beautifulsoup4
+
+Usage:
+	from bs4 import BeautifulSoup
+	import urllib
+
+	url = "https://google.com"
+	html = urllib.urlopen(url).read()
+
+	soup = BeautifulSoup(html)
+	soup.findall('a')

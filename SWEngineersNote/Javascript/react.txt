@@ -1,0 +1,201 @@
+REACT
+
+- react.js is for components
+- react-dom.js is for rendering DOM objects
+
+JSX: 
+	Transforms XML-like syntax to native JavaScript
+
+	Rules:
+		- if trying to return multiple elements at once, they must be wrapped in a container element like <div>
+		- to use variables for values, wrap variable names with {}
+		- to apply CSS styles, use camelCase instead of normal CSS attribute names
+			ex. background-color -> backgroundColor
+		  also, use JavaScript object to define styles
+		  	ex. let style = { backgroundColor: 'aqua' };
+
+		  ###
+		  	// inside render()
+		  	let style = { backgroundColor: 'aqua'};
+		  	return (<h1 style={style}> color this block </h1>);
+		  ###
+
+		- commenting: {/* ... */}
+
+Creating a component:
+	1. Define a class that inherits from React.Component
+	2. Define render():
+		###
+			class CodeLab extends React.Component{
+			  render(){
+			    return (
+			      <div>Hello World</div>
+			    );
+			  }
+			}
+
+			class App extends React.Component{
+			  render(){
+			    return <CodeLab/>
+			  }
+			}
+		###
+
+Rendering:
+	Render the DOM using ReactDOM class static method render:
+		###
+			// first arg: React component
+			// second arg: specific HTML DOM element to embed React component inside
+			ReactDOM.render()
+		###
+
+Props
+	Represents immutable data inside components
+	
+	Format: 
+		{this.props.propsName}	// uses the data specified in the component attribute section
+			###
+				<Component exProp="this goes to this.props.exProp"></Component>
+			###
+
+		{this.props.children}	// uses the data specified between the component tags
+			###
+				<Component>This goes to "this.props.children"</Component>
+			###
+
+	To set default props:
+		Component.defaultProps = {
+			// props here
+		}
+			###
+				App.defaultProps = {
+					value: 0				// this.props.value set to 0
+				}
+			###
+
+	Type check:
+		Component.propTypes = {
+			// prop types here, value: React.PropTypes.string for example
+		}
+
+
+
+
+
+QUESTIONS
+
+It seems it is possible to use React without wrapping the HTML elements in a container element. 
+
+
+
+
+
+
+
+
+
+
+Naming
+	- React class names begin with an uppercase letter (eg. CommentBox)
+JSX
+	###
+		var CommentBox = React.createClass({
+	        render: function(){
+	          return (
+	              <div className="commentBox">
+	              	Hello World! I am a CommentBox
+	              </div>
+	          );
+	        }
+	    });
+	###
+
+	### equivalent to above
+		var CommentBox = React.createClass({displayName: 'CommentBox',
+		  render: function() {
+		    return (
+		      React.createElement('div', {className: "commentBox"},
+		        "Hello, world! I am a CommentBox."
+		      )
+		    );
+		  }
+		});
+	###
+
+	To use a JavaScript expression as an attribute value, wrap the expression in a pair of curly braces ({}) instead of quotes ("").
+
+ReactDOM.render() instantiates the root component, starts the framework, and injects the markup into a raw DOM element, provided as the second argument.
+
+Data flow: parents -> children using props
+	###
+		var Comment = React.createClass({
+	      	render: function(){
+	      		return(
+	      			<div className="comment">
+	      				<h2 className="commentAuthor">
+	      					{this.props.author}
+	      				</h2>
+	      				{this.props.children}
+	      			</div>
+	      		);
+	      	}
+	    });
+		var CommentList = React.createClass({
+	      	render: function(){
+	      		return(
+	      			<div className="commentList">
+	      				<Comment author="Author1">This is one comment</Comment>
+	      				<Comment author="Author2">This is *another* comment</Comment>
+	      			</div>
+	      		);
+	      	}
+	    });
+	###
+
+	- data other than string needs to be wrapped with {}
+
+Adding Markdown:
+	1. Create a new instance of Remarkable class:
+		###
+			var md = new Remarkable();
+		###
+	2. render it, wrap it:
+		###
+			{md.render(this.props.children.toString())}
+		###
+
+	This produces a markdown string such as: <p>This is <em>another</em> comment</p>
+
+	To insert this as a part of HTML:
+		1. include another dictionary value 'rawMarkup' inside React.createClass()
+			###
+				rawMarkup: function(){
+					var md = new Remarkable();
+		      		var rawMarkup = md.render(this.props.children.toString());
+		      		return {__html: rawMarkup};
+				},
+			###
+		2. call it using this.rawMarkup()
+			###
+				render: function(){
+		      		return(
+		      			<div className="comment">
+		      				<h2 className="commentAuthor">
+		      					{this.props.author}
+		      				</h2>
+		      				<span dangerouslySetInnerHTML={this.rawMarkup()}/>
+		      			</div>
+	      		);
+	      	###
+
+props is immutable; state is mutable
+this.state is private to the component, and re-renders if changed
+
+getInitialState()
+	- executes exactly once, sets up the initial state of the component
+componentDidMount()
+	- called automatically after a component is rendered for the first time
+
+
+
+

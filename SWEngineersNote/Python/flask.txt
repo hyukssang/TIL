@@ -1,0 +1,147 @@
+app.py
+	- import flask using:
+		from flask import Flask
+	- import folder which contains all the controller functions:
+		import controllers		// functions inside a folder named 'controllers'
+	- initialize Flask app by:
+		###
+			app = Flask(__name__, template_folder="templates")
+		###
+	- add blueprints (blueprint of how to construct or extend an application):
+		###
+			app.register_blueprint(controllers.bags)
+		###
+Templating
+	base.html
+		- this is where you place all the links to css, js files (use url_for() for href)
+			* make sure all the css, js files are placed inside 'static' folder
+			
+			###
+				<link rel="stylesheet" href="{{url_for('static', filename='css/reset.css')}}">
+			###
+
+		- include the following statements to where your contents change:
+			
+			###
+				<body>
+					{% block content %}{% endblock %}
+				</body>
+			###
+
+	other.html
+		- use the following to include base.html
+			###
+				{% extends "base.html"%}
+			###
+		- place html contents inside the following: 
+			###
+				{% block content %}
+					// contents inside
+				{% endblock %}
+			###
+
+	for loop
+		###
+			{% for item in items %}
+				{{ item['test'] }}
+			{% endfor %}
+		###
+	if statement
+		###
+			{% if foo %}
+				{{ bar }}
+			{% endif %}
+		###
+		
+	{% ... %} is for Statements
+	{{ ... }} is for Expressions
+	http://jinja.pocoo.org/docs/dev/templates/
+
+Making blueprint controller
+	- create __init__.py that imports controller files
+	- for each controller, init Blueprint instance
+		###
+			bags = Blueprint('bags', __name__, template_folder='templates')
+		###
+	- specify a route using a decorator (@) and define a function to run under the specified route
+		###
+			@bags.route('/bags')
+			def bags_route():
+				return render_template("bags.html")
+		###
+
+
+{{url_for('bags.bags_route')}}
+
+To check with which method a function was called: 
+	request.method
+Specify which methods are supported in the route decorator:
+	@index.route('/', methods=['GET', 'POST'])
+
+To return data in a JSON format:
+	json.jsonify(data)		// data is a dictionary containing all the data to be sent
+
+MySQL x Flask:
+	1. pip install flask-mysql
+	2. include 'from flaskext.mysql import MySQL'
+	3. create an instance of MySQL object
+		mysql = MySQL()
+	4. provide username, password, databasename using: 
+		- app.config.from_object(MySQLConfig)
+		// where MySQLConfig is a class containing variables for username, password, databasename, etc.
+		- app.config['MYSQL_DATABASE_USER']
+		// this is an example
+	5. set the configuration for the database using:
+		mysql.init_app(app)
+		// where 'mysql' is a MySQL instance from flask-mysql
+	6. set up connection by: 
+		conn = mysql.get_db()
+	7. get the cursor: 
+		cursor = mysql.get_db().cursor()
+	8. execute:
+		cursor.execute(query, data)
+		query = 'INSERT INTO User VALUES (%s, %s)'
+		data = ['Sang', 'Cho']
+	9. commit or retrieve it: 
+		conn.commit()		//save
+		cursor.fetchall()	//retrieve
+	10. close:
+		conn.close()
+
+Encryption:
+	import uuid
+	import hashlib
+
+	salt = uuid.uuid4().hex //Generate a random id in 32char hex string
+
+	algo = 'sha256'
+	h = hashlib.new(algo) 	//Construct hash object of given hash algorithm
+
+	h.update(salt)			//Update the hash object with the given string argument. Repeated calls result in hashing of strings concatenated
+	
+	outHash = h.hexdigest() //Like digest() except the digest is returned as a string of double length, containing only hexadecimal digits.
+
+	outPassword = "$".join([algorithm, inSalt, outHash])	//Save algorithm and salt so we can compare with password inputted later
+
+Forms are passed as: 
+	request.form //Where form is a dictionary of input names
+
+To redirect:
+	- without any parameter
+	return redirect(url_for('index.index_route'))
+
+	- with a parameter, query string
+	return redirect(url_for('index.index_route', query))
+
+	- with a parameter, variable path
+	return redirect(url_for('index.index_route', varName = varValue))
+	
+Variable URL:
+	@index.route('/')
+
+
+
+
+
+
+

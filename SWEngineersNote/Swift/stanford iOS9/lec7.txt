@@ -1,0 +1,125 @@
+LESSON 7: Closures, Extensions, Protocols, Delegation
+
+Memory Management
+	- Works by counting the reference to the objects in the heap
+	(i.o.w. if not used, not stored)
+
+	Automatic Reference Counting (ARC)
+		strong
+			- "normal reference counting"
+			- will stay in the heap
+		weak
+			- set to nil if "no one is interested in this"
+			- works only for Optional pointers to reference types
+			- will NEVER keep an object in the heap
+		unowned
+			- "don't reference count this; crash if I'm wrong"
+			- rarely used
+
+Closures
+	- stored in the heap, are reference types
+	- captures variables they use inside heap as well, as long as they stay in the heap
+	- creates a memory cycle
+
+		* Memory cycle
+			- closures force you to use 'self' for variables, and this makes the variables
+			to stay on the heap. We would have Model and Controller pointing to one another
+			forever. 'self' -> closure -> 'self'
+			- to avoid:
+				Assign 'self' to an 'unowned' parameter
+				###
+					// 'self' -> closure -> 'unowned'
+					addUnaryOperation("sqrt"){[unowned me = self] in
+						me.display.textColor = UIColor.redColor()
+						return sqrt($0)
+					}
+				###
+				* Make sure the closure don't live longer than ViewController
+
+				Assign 'self' to a 'weak' parameter and use optional chaining
+
+Extensions
+	- Allows you to add methods/properties to a class/struct/enum, even if you don't have the source
+		###
+			extension UIViewController{
+				var contentViewController: UIViewController{
+					// do something
+				}
+			}
+		###
+
+	Restrictions
+		- You can't re-implement methods/properties already there
+		- The properties you add can have no storage associated with them (computation only)
+
+Protocols
+	- A collection of method and property declarations
+	- Protocol is a TYPE like String, Int, Double, etc.
+	- Doesn't have actual implementations, they are provided by implementing types (class, struct, enum)
+	- Can have optional methods that do not have to be implemented
+		* To have optional methods, the protocol implementing class must inherit from NSObject
+	- If a protocol inherits from other protocols, the methods/properties from inheriting protocols
+	must be implemented as well
+	- Specify whether a property is get only or both get and set
+	- Any functions that are expected to mutate the receiver should be marked 'mutating'
+	- In a class, 'init's must be marked 'required'. Otherwise, subclasses might not conform
+	- No storage
+
+	4 Aspects to using a protocol
+		1. Protocol declaration
+		2. Declaration where a class/struct/enum claims that it implements a protocol
+		3. The code that implements the protocol in said class/struct/enum
+		4. Optionally add extension to the protocol which provides some default implementation
+
+
+Delegation
+	1. A view declares a delegation protocol (i.e. what the View wants the Controller to do for it)
+	2. The View's API has a 'weak' delegate property whose type is that delegation protocol
+	3. The View uses the delegate property to get/do things it can't own or control on its own
+	4. The Controller declares that it implements the protocol
+	5. The Controller sets self as the delegate of the View by setting the property in #2 above
+	6. The Controller implements the protocol
+
+	In Swift, use closures
+
+	###
+		class UIViewCotnroller: UIScrollViewDelegate{
+			viewDidLoad(){
+				scrollView.delegate = self;
+			}
+			// implement any of the protocol's methods
+		}
+	###
+
+ScrollView
+	Adding a ScrollView to the UIView
+		###
+			// set the contentSize to be the width and height the ScrollView needs to cover (not just the screen size)
+			scrollView.contentSize = CGSize(width: 3000, height: 2000)
+			// create a view to add to ScrollView
+			logo.frame = CGRect();
+			scrollView.addSubview(logo);
+		###
+		* contentSize MUST BE SET in order for scrolling to work
+
+	To find what area in a subview is currently visible
+		var upperLeftOfVisible: CGPoint				// Content area's coordinate system
+		let visibleRect: CGRect = aerial.convertRect(scrollView.bounds, fromView: scrollView)
+
+	Scrolling programmatically
+		func scrollRectToVisible(CGRect, animated: Bool)
+
+	Zooming
+		- Modify the UIView's property associated with translate, scale, and rotate
+		- Affects the scroll view's contentSize and contentOffset
+		- Will not work without minimum/maximum zoom scale being set
+			###
+				scrollView.minimumZoomScale = 0.5	// 0.5 means half of normal
+				scrollView.maxinumZoomScale = 2.0	// 2.0 means twice
+			###
+		- Will not work without delegate method to specify view to zoom
+			func viewForZoomingInScrollView(sender: UIScrollView) -> UIView
+		- Zooming programmatically
+			var zoomScale: CGFloat
+			func setZoomScale(CGFloat, animated: Bool)
+			func zoomToRect(CGRect, animated: Bool)

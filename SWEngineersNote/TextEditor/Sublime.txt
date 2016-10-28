@@ -1,0 +1,11 @@
+SUBLIME
+
+How to bind command to key:
+	1. Click on Preference -> Key Bindings-User
+	2. Add fields in a dictionary form, "keys" and "command" between []
+	value to the "keys" being a key combination wrapped with [] and ""
+	value to the "command" being the name of the command found at /Packages/Default/Main.sublime-menu
+
+		###
+			{ "keys": ["super+shift+o"], "command": "prompt_add_folder" }
+		###

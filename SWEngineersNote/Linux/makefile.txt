@@ -1,0 +1,76 @@
+Makefile
+	Command: make
+	
+
+	Structure:
+		target ... : dependency ...
+					[TAB]command
+						...
+						...
+
+		target 	// files that are created from running the command
+				// sometimes acts as labels
+		command // run when files specified in 'dependency' part changed contents or does not exist
+				// you can use any shell commands 
+				// MUST start with a TAB
+
+		### Basic Usage
+			test : main.o read.o write.o
+                gcc -o test main.o read.o write.o
+
+			main.o : io.h main.c 
+			                gcc -c main.c
+			read.o : io.h read.c
+			                gcc -c read.c
+			write.o: io.h write.c
+			                gcc -c write.c
+		###
+
+		### Using Targets
+			all : test								// make all
+
+			test : main.o read.o write.o
+                gcc -o test main.o read.o write.o
+
+			main.o : io.h main.c 
+			                gcc -c main.c
+			read.o : io.h read.c
+			                gcc -c read.c
+			write.o: io.h write.c
+			                gcc -c write.c
+
+			clean:
+				rm *o test							// make clean
+													// removes every file with .o extension and test
+		###
+
+
+	External Macros(use 'make -p' to check them out)
+		### With Macro
+			OBJECTS = main.o read.o write.o 		// OBJECTS stores all dependencies needed by test
+			test : $(OBJECTS)
+					gcc -o test $(OBJECTS)
+
+			main.o : io.h main.c 
+			                gcc -c main.c
+			read.o : io.h read.c
+			                gcc -c read.c
+			write.o: io.h write.c
+			                gcc -c write.c
+		###
+
+	Internal Macros
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

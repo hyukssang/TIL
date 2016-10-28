@@ -1,0 +1,94 @@
+LESSON 4: Views, Drawing
+
+View
+	- hierarchial. 1 superview with many subviews
+	- top of the hierarchy is UIWindow
+	- add/remove
+		addSubview() 			// sent to the superview
+		removeFromSuperview()	// sent to the view you want to remove (not the superclass)
+	- two inits:
+		init(frame: CGRect)		// initializer if the UIView is created in code
+		init(coder: NSCoder)	// initializer if the UIView comes out of the storyboard
+	- alternative to inits:
+		awakeFromNib()			// only called if the UIView came out of a storyboard, 
+								// called after initialization is complete
+
+Coordinate System Data Structures
+	CGFloat:
+		- use this over Double or Float
+	CGPoint:
+		- for x and y
+	CGSize:
+		- for width and height
+	CGRect:
+		- x, y, width, height altogether
+
+View Coordinate System
+	- origin is at upper left
+	- units are in points, not pixels:
+		= points may have 2 pixels per point, 3, 4, etc.
+		= 'contentScaleFactor' property is for finding out how many pixels per point
+	- several notable properties:
+		var bounds: CGRect	// rectangle containing the drawing space in its own coordinate system
+							// .origin often means nothing
+
+		var frame: CGRect	// the rect containing a UIView in its superview's coordinate system
+		var center: CGPoint	// the center of a UIView in its superview's coordinate system 
+
+		* never used center and frame to position a UIView
+		* frame's size may not equal bound's size
+
+Custom Views
+	- to create: create a UIView subclass and override drawRect():
+		Core Graphics
+			1. Get a context to draw into: UIGraphicsGetCurrentContext() 
+			2. Create paths
+			3. Set drawing attributes like colors, fonts, etc.
+			4. Stroke or fill the above-created paths with the given attributes
+		UIBezierPath
+			- same as CoreGraphics, but captures all the drawing with a UIBezierPath instance
+			- automatically draws in the "current" context
+			- has methods to draw and set attributes 
+			- use UIColor to set stroke and fill colors
+
+			### example
+				// draws a triangle with a red line and green color
+				let path = UIBezierPath()
+				path.moveToPoint(CGPoint(80, 50))
+				path.addLineToPoint(CGPoint(140, 150))
+				path.addLineToPoint(CGPoint(10, 150))
+				path.closePath()
+				UIColor.greenColor().setFill()
+				UIColor.redColor().setStroke()
+				path.fill()
+				path.stroke()
+			###
+	- to redraw: call setNeedsDisplay(), which calls drawRect() when appropriate
+
+Drawing Text
+	- use 'NSAttributedString' or 'NSMutableAttributedString' (!= String or NSString)
+	- .drawAtPoint to draw at a certain coordinate
+	- useful methods:
+		setAttributes()
+		addAttributes()
+	- attributes:
+		NSForegroundAttributeName
+		NSStrokeWithAttributeName
+		NSFontAttributeName
+	- changing fonts:
+		preferredFontForTextStyle()
+
+Drawing Images
+	UIImageView
+	UIImage
+		- useful methods:
+			.drawAtPoint()
+			.drawInRect()			// scales the image to fit a CGRect
+			.drawAsPatternInRect()	// tiles the image
+
+	Redraw on bounds change:
+		var contentMode: UIViewContentMode
+			Placing: .Left, .Right, .Top, .Bottom, etc.
+			Scale: .ScaleToFill, .ScaleAspectFill, etc.
+			Redraw: .Redraw
+

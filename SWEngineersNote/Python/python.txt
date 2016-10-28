@@ -1,0 +1,23 @@
+INPUT OUTPUT
+
+	Opening a file
+		f = open('[filepath]', '[read/write permission]')
+	Reading from the file
+		f.read([size])	# reads some quantity of data and returns a string
+		f.readline()	# reads a single line from the file
+		for line in f:	# reads line by line
+			statement
+	Writing to the file
+		f.write([string])
+	Closing the file
+		f.close()
+
+	Taking argument from the command line
+		sys.argv[[index]]	# If run with 'python file1.py text.txt'
+							# sys.argv[0] == file1.py
+
+REGEX
+
+	re.sub([pattern], [replacement], [string])
+	re.search([pattern], [string])
+	re.group([number])

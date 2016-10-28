@@ -1,0 +1,454 @@
+# props/methods
+### sample code
+
+Variable:
+	- variables keep reference to values stored in memory, so multiple variables can share same values in memory
+	- if not declared with 'var', then automatically becomes a global variable. 
+	- types: String, Number, Boolean, Undefined, Null, Object
+
+Values treated as true/false:
+	1. True: 
+		true 	// Boolean true
+		numbers other than 0
+		string other than an empty string (including '0', 'true', 'false')
+	2. False:
+		false 	// Boolean false
+		0		// Number 0
+		''		// Empty string
+		empty variable
+
+Array Declaration:
+	###
+	var colors; 
+	colors = ['white', 'black', 'custom'];
+	###
+
+	###
+	var colors = new Array('white', 'black', 'custom');
+	###
+
+String operator:
+	1. '7' + '9' = '79'
+	2. 7 + '9' = '79'
+	3. '7' * '9' = NaN	//operators other than addition on strings result in NaN
+
+Functions: 
+	1. Ordinary function:
+
+		###
+		// One Result
+		function calculate(one, two){
+			var result = one + two;
+			return result;
+		};
+		calculate(1, 2);
+		###
+
+		###
+		// Multiple Results
+		function calculate(one, two){
+			var result1 = one + two;
+			var result2 = one - two;
+			var results = [result1, result2];
+			return results;
+		};
+		var r1 = calculate(1, 2)[0];
+		###
+
+	2. Function Expression (aka. anonymous function)
+
+		###
+		var calculate = function(one, two){
+			var result = one + two;
+			return result;
+		};
+		var r = calculate(1, 2);
+		###
+
+	3. Immediately Invoked Function Expression
+
+		###
+		var calculate = (function(){	// Called only once
+			var one = 7;
+			var two = 9;
+			return one + two;
+		}());
+		###
+
+JavaScript Objects: 
+	1. Objects using Literal Notation:
+
+		###
+		var hotel = {
+			name: 'Hotel', 
+			rooms: 40,
+
+			checkIn: function(){
+				console.log('checked in');
+			}
+		};
+
+		var name = hotel.name; 		// 'Hotel'
+		var checkInFcn = hotel.checkIn();
+		###
+
+	2. Objects using Constructors:
+
+		###
+		var hotel = new Object();	// Use either one
+		var hotel = {}				// Use either one
+
+		hotel.name = 'Hotel';
+		hotel.rooms = 40;
+
+		hotel.checkIn = function(){
+			console.log('checked in');
+		};
+		###
+
+	* To delete properties, try:
+		delete hotel.name;	// This deletes property named 'name' inside 'hotel' object
+
+	3. Objects using Constructor function: 
+
+		###
+		function hotel(name, rooms){
+			this.name = name;
+			this.rooms = rooms;
+
+			this.checkIn = function(){
+				return console.log('checked in');
+			};
+		}
+
+		var MGM = new hotel('MGM', 40);
+		###
+
+'this':
+	- If used globally, 'this' refers to window Object + global variables.
+	  Otherwise, refers to the object it is declared inside
+
+내장 객체
+	1. Browser Object Model: window
+		- Constructs models for browser window/tab
+		- objects inside 'window': document, history, location, navigator, screen
+
+	2. Document Object Model: document
+		- Constructs web page's model 
+		- useful props/methods:
+			# document.write() 			// Prints text on the document
+			# document.getElementById() 	// Returns the element with specific id
+			# document.querySelectorAll() // Returns a list of elements matching the CSS selector
+			# document.createElement()	// Creates a new element
+			# document.createTextNode() 	// Creates a new text node
+
+			# document.URL	// Returns current document's URL in string
+
+	3. Global Javascript Objects
+		- useful props/methods: 
+			String Object
+				# .length
+
+				# .charAt()	// Returns the character at corresponding index
+				# .split()	
+				# .trim()		// Returns the string with spaces at the ends removed
+				# .substring()
+
+			Math Object
+				# .PI 		// Returns pi, 3.14...
+
+				# .sqrt(n)
+				# .ceil()
+				# .floor()
+				# .random()	// Returns a random number between 0 and 1, 0 inclusive 1 exclusive
+
+			Date Object
+				# .getDate(), .setDate()	// Gets, sets current month's date (1st ~ 31th)
+				# .getDay()
+				# .getMonth()
+				# .getFullYear()
+				# .getHours()
+				# .getMinutes()
+				# .getSeconds()
+
+
+DOM Tree
+	Types of nodes: 
+		1. document node
+		2. element node
+			- Contains attribute node and text node
+
+	Creating nodes: 
+		# .createElement()
+		# .createTextNode()
+		# .appendChild()/.removeChild()		
+	* create a text node - create an element node - append the text node to the element
+
+	Getting nodes:
+		1. one at a time: 
+			# getElementById()
+			# querySelector()		// Returns first element that matches the given CSS selector
+		2. multiple:
+			# getElementsByClassName()
+			# getElementsByTagName()
+			# querySelectorAll()
+		3. between nodes:
+			# parentNode
+			# previousSibling/nextSibling
+			# firstChild/lastChild
+
+	Getting/Setting text nodes: 
+		# .nodeValue
+
+	Modifying HTML content of nodes:
+		# .innerHTML
+		# .textContent
+
+	Getting/Setting attributes
+		# .className/.id
+
+		# .hasAttribute()
+		# .getAttribute()
+		# .setAttribute()
+		# .removeAttribute()
+
+
+Events	
+	3 Event binding methods
+		1. HTML Event Handler
+		2. Traditional DOM Event Handler
+		3. Event Listener
+
+	HTML Event Handler
+		- HTML event attribute calls the JS function specified 
+
+		###
+		<input type="text" id="username" onblur="checkUsername()"/>		// onblur calls JS function 'checkUsername()'
+		<div id="feedback"></div>
+		<script> 
+			function checkUsername(){
+				var username = document.getElementById("username");
+				var feedback = document.getElementById("feedback");
+				feedback.textContent = "Username";
+			}
+		</script>
+		###
+
+	DOM Event Handler
+		- Takes the form of: element.onevent = functionName;		
+
+		###
+		<script>
+			function checkUsername(){
+				// Some code inside
+			}
+			var el = document.getElementById('username');
+			el.onblur = checkUsername;
+		</script>
+		###
+
+	Event Listener
+		- Takes the form of: element. addEventListener('event', functionName [, Boolean]);
+
+		###
+		<script>
+			function checkUsername(){
+				// Some code inside			
+			}
+			var el = document.getElementById('username');
+			el.addEventListener('blur', checkUsername, false);	//equivalent
+			el.addEventListener('blur', function(){				//equivalent
+				checkUsername(5);
+			}, false);
+		</script>
+		###
+
+	event Object
+		- sent to functions assigned to event handlers/listeners
+		- useful props/methods:
+			# .target				// Element on which an event was invoked
+			# .type 				// Type of the event 
+			# .cancelable
+
+			# .preventDefault()		// Prevents the default action of the event
+			# .stopPropagation()	// Prevents event capturing or bubbling
+
+			# .screenX, .screenY	// 모니터 화면 전체를 대상으로 왼쪽 상단 기준 현재 커서의 위치를 알려준다
+			# .pageX, .pageY		// 전체 페이지를 기준으로 현재 커서의 위치를 알려준다
+			# .clientX, .clientY	// 브라우저의 viewport를 기준으로 커서의 위치를 알려준다 
+
+		### if there is no parameter
+			function checkUsername(e){
+				var target = e.target;
+			}
+			var el = document.getElementById('username');
+			el.addEventListener('blur', checkUsername, false);
+		###
+
+		### if there are other parameters
+			function checkUsername(e, param){
+				var target = e.target;
+			}
+			var el = document.getElementById('username');
+			el.addEventListener('blur', checkUsername(e){
+				checkUsername(e, 5);
+			}, false);
+		###
+
+	Event List
+		UI
+			load
+			unload
+			error
+			resize
+			scroll
+
+		Keyboard
+			keydown			
+			keyup			
+			keypress
+
+			// event object returned by this keydown and keypress has property called 'keyCode',
+			// which tells you which key was pressed in ASCII.
+			// String.fromCharCode(event.keyCode);
+		Mouse
+			click
+			dblclick
+			mousedown
+			mouseup
+			mousemove
+			mouseover
+			mouseout
+
+		Focus
+			focus/focusin
+			blur/focusout
+
+		Form
+			input
+			change
+			submit
+			reset
+			cut
+			copy
+			paste
+			select
+
+		DOM
+			DOMSubtreeModified
+			DOMNodeInserted
+			DOMNodeRemoved
+			DOMNodeInsertedIntoDocument
+			DOMNodeRemovedFromDocument
+
+Ajax
+	Request/Response
+		###
+			var xhr = new XMLHttpRequest();					// Create an instance of XMLHttpRequest
+			
+			xhr.open('GET', 'data/test.json', true);		// .open() sets up a request to be sent to a server
+															// parameter1: HTTP method
+															// parameter2: server URL
+															// parameter3: whether the request is going to be async
+			
+			xhr.send('search=arduino');						// .send() sends the request
+															// can send additional data with the request
+
+			xhr.onload = function(){
+				if(xhr.status == 200){
+					// If the response received is normal, process
+				}
+			}
+		###
+
+	JSON
+		JSON Format
+			###
+				{
+					"location": "San Francisco",
+					"capacity": 270,
+					"booking": true
+				}
+			###
+
+		JSON functions
+			JSON.stringify()
+				- Turns JavaScript object into a string (serializing)
+			
+			JSON.parse()
+				- Processes the string with JSON data (deserializing)
+
+
+Execution
+	Execution context
+		Global context
+			- 스크립트 중 함수가 아닌 영역에 존재하는 코드는 이 컨텍스트에서 실행된다. 모든 페이지를 통틀어 전역 컨텍스트는 단 하나뿐
+		Function context
+			- 함수 내에서 실행되는 코드들은 이 컨텍스트 내에 존재
+			- 각 함수는 각자의 함수 컨텍스트를 보유
+		eval context
+			- 내부함수인 eval() 함수에 의해 코드처럼 실행되는 텍스트는 이 컨텍스트 내에 존재
+	
+	Variable scope
+		Global scope
+			- 변수가 함수 바깥에 선언되어 있으면 전역 스코프에 포함
+		Function level scope
+			- 변수가 함수 내에서 선언되면 이 변수는 해당 함수내에서만 사용
+
+	Execution Order
+		1. Preparation
+			- Create new scope
+			- Create variables, functions, constants
+			- Decide the value of 'this'
+		2. Execution
+			- Assign values to variables
+			- Assign functions to variables and run that code
+
+Error
+	Types(Objects): 
+		SyntaxError
+			- When syntax is wrong
+		ReferenceError
+			- When variables do not exist or are out of scope
+		TypeError
+			- When trying to use objects/methods that do not exist
+		RangeError
+			- When the number passed to a function is invalid
+		EvalError
+			- When used eval() function incorrectly
+		URIError
+			- When used URI function incorrectly
+		Error
+			- General Error Object
+
+	Useful console methods:
+		console.(prop/method)
+		# .info()
+		# .warn()
+		# .error()
+		# .group()
+		# .groupEnd()
+		# .table()
+		# .assert()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

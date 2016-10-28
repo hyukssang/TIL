@@ -1,0 +1,29 @@
+Linux Structure
+	Kernel: In charge of computer resources such as processes, memory, file system, etc.
+	Shell: Interprets user commands, sends them to the kernel, prints out the results
+	Application Programs
+	
+Command Line Shortcuts
+	- ctrl + u: erase the whole line
+	- ctrl + w: erase each word
+
+curl [option] [urls]
+	- without an option, displays the content of the url
+	- with -O flag, downloads the file with the same name
+
+Creating symlink
+ln -s [target directory/file][symlink shortcut]
+Removing symlink
+unlink [symlink shortcut]
+
+mv [opt][oldfilename][newfilename]	//change the name of the file
+mv [opt][filename][directory]		//move the file to the directory
+mv [opt][directory][directory]		//change the name of the directory
+
+
+
+
+
+
+
+
