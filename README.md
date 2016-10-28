@@ -1,6 +1,20 @@
 # TIL: Today I Learned
 
-### Progress
+## Folders
+
+#### AceThatInterview
+> Where I keep notes on Interview materials
+
+#### SWEngineersNote
+> Where I keep notes on Programming
+
+### Tutorials
+> Where I keep files used for tutorials
+
+<br/>
+
+## Progress
+
 ~16.10.26
 - Started Django Tutorial
 - Revisited Coding Interview materials
