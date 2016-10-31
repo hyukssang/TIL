@@ -23,3 +23,9 @@
 
 16.10.27
 - Started Unit Testing tutorial in Swift
+
+16.10.28
+- GitHub repository clean up
+
+16.10.30
+- Learned about how to add custom Layout Constraints to views in Swift
