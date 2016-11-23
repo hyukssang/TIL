@@ -29,3 +29,12 @@
 
 16.10.30
 - Learned about how to add custom Layout Constraints to views in Swift
+
+16.11.02
+- Learned about how to scan barcodes using `AVFoundation` library
+
+16.11.19
+- Learned about how to write a completion handler using Closure in Swift
+
+16.11.22
+- Swift: Navigation bar customization
