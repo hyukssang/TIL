@@ -38,3 +38,6 @@
 
 16.11.22
 - Swift: Navigation bar customization
+
+16.11.30
+- Google Chrome: how to make a Chrome extension
