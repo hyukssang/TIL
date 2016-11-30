@@ -24,7 +24,7 @@ V	: indicates vertical orientation
 
 @[number]	: priority from 0 to 1000, 1000 being the highest priority
 
-\- [number] - : non-standard spacing (in this case 20points)
+\-[number]- : non-standard spacing (in this case 20points)
 
 
 **Code Example:**
