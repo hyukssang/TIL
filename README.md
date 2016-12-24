@@ -13,7 +13,7 @@
 
 <br/>
 
-## Progress
+## Progress (Things I Learned)
 
 ~16.10.26
 - Started Django Tutorial
@@ -22,22 +22,37 @@
 - Learned to use Markdown (FINALLY!!)
 
 16.10.27
-- Started Unit Testing tutorial in Swift
+- Swift: Unit Testing
 
 16.10.28
 - GitHub repository clean up
 
 16.10.30
-- Learned about how to add custom Layout Constraints to views in Swift
+- Swift: Custom Constraint Layout
 
 16.11.02
-- Learned about how to scan barcodes using `AVFoundation` library
+- Swift: AVFoundation, Barcode scanning
 
 16.11.19
-- Learned about how to write a completion handler using Closure in Swift
+- Swift: Closure, Completion Handler
 
 16.11.22
 - Swift: Navigation bar customization
 
-16.11.30
+16.11.23
+- Swift: Constraint using VFL
+
+16.11.29
+- Swift: Screen orientation change with CollectionView
+
+16.11.30 - 16.12.01
 - Google Chrome: how to make a Chrome extension
+
+16.12.02
+- Swift: Read about JavascriptCore
+
+16.12.03
+- Swift: Apple Pay
+
+16.12.21
+- Chrome:

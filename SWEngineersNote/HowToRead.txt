@@ -1,4 +1,0 @@
-Tabs	// Subsection
-{}, ###	// Code example
--		// Body?
-//		// Additional notes for code examples

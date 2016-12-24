@@ -26,20 +26,31 @@ Extensions can interact with web pages or servers using content scripts or cross
 		]
 	}
 ```
+
+##### Frequently used
 - `default_icon` specifies the image to be used for the icon
 - `default_popup` specifies the HTML file to be rendered as a popup window
 - `default_title` specifies the message to appear when hovering over the icon (helpful message)
+- `permissions` specifies which chrome APIs and/or hosts this chrome extension has access to
 
 ### Local Testing
+
+##### Uploading
 1. Go to `chrome://extensions`
 2. Check the checkbox **Developer mode**
 3. Click on **Load unpacked extension...** and choose the directory you saved manifest.json and files that go along with it
 
-**Files to be included**
+##### Files to be included
 - Manifest file
 - One or more HTML files
 - One or more JavaScript files
 - Any other files, including images, etc.
+
+### APIs
+
+`chrome.tabs`
+- For interacting with the browser's tab system. Use this API to create, modify, and rearrange tabs in the browser
+- To use, include **"tabs"** under permissions in manifest
 
 ### Reference
 - [Google Chrome Developer Page](https://developer.chrome.com/extensions/getstarted)
