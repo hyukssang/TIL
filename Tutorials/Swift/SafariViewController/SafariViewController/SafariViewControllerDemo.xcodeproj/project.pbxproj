@@ -15,7 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		D1CFD5B61E0EBB4E00E5FE23 /* SafariViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafariViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1CFD5B61E0EBB4E00E5FE23 /* SafariViewControllerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafariViewControllerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1CFD5B91E0EBB4E00E5FE23 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1CFD5BB1E0EBB4E00E5FE23 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D1CFD5BE1E0EBB4E00E5FE23 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -38,7 +38,7 @@
 		D1CFD5AD1E0EBB4E00E5FE23 = {
 			isa = PBXGroup;
 			children = (
-				D1CFD5B81E0EBB4E00E5FE23 /* SafariViewController */,
+				D1CFD5B81E0EBB4E00E5FE23 /* SafariViewControllerDemo */,
 				D1CFD5B71E0EBB4E00E5FE23 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -46,12 +46,12 @@
 		D1CFD5B71E0EBB4E00E5FE23 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D1CFD5B61E0EBB4E00E5FE23 /* SafariViewController.app */,
+				D1CFD5B61E0EBB4E00E5FE23 /* SafariViewControllerDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D1CFD5B81E0EBB4E00E5FE23 /* SafariViewController */ = {
+		D1CFD5B81E0EBB4E00E5FE23 /* SafariViewControllerDemo */ = {
 			isa = PBXGroup;
 			children = (
 				D1CFD5B91E0EBB4E00E5FE23 /* AppDelegate.swift */,
@@ -61,15 +61,16 @@
 				D1CFD5C21E0EBB4E00E5FE23 /* LaunchScreen.storyboard */,
 				D1CFD5C51E0EBB4E00E5FE23 /* Info.plist */,
 			);
+			name = SafariViewControllerDemo;
 			path = SafariViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D1CFD5B51E0EBB4E00E5FE23 /* SafariViewController */ = {
+		D1CFD5B51E0EBB4E00E5FE23 /* SafariViewControllerDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D1CFD5C81E0EBB4E00E5FE23 /* Build configuration list for PBXNativeTarget "SafariViewController" */;
+			buildConfigurationList = D1CFD5C81E0EBB4E00E5FE23 /* Build configuration list for PBXNativeTarget "SafariViewControllerDemo" */;
 			buildPhases = (
 				D1CFD5B21E0EBB4E00E5FE23 /* Sources */,
 				D1CFD5B31E0EBB4E00E5FE23 /* Frameworks */,
@@ -79,9 +80,9 @@
 			);
 			dependencies = (
 			);
-			name = SafariViewController;
+			name = SafariViewControllerDemo;
 			productName = SafariViewController;
-			productReference = D1CFD5B61E0EBB4E00E5FE23 /* SafariViewController.app */;
+			productReference = D1CFD5B61E0EBB4E00E5FE23 /* SafariViewControllerDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -101,7 +102,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D1CFD5B11E0EBB4E00E5FE23 /* Build configuration list for PBXProject "SafariViewController" */;
+			buildConfigurationList = D1CFD5B11E0EBB4E00E5FE23 /* Build configuration list for PBXProject "SafariViewControllerDemo" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -114,7 +115,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D1CFD5B51E0EBB4E00E5FE23 /* SafariViewController */,
+				D1CFD5B51E0EBB4E00E5FE23 /* SafariViewControllerDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -263,8 +264,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 4W227SQZ26;
 				INFOPLIST_FILE = SafariViewController/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sang.SafariViewController;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sang.SafariViewControllerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -276,8 +278,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 4W227SQZ26;
 				INFOPLIST_FILE = SafariViewController/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sang.SafariViewController;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sang.SafariViewControllerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -286,7 +289,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D1CFD5B11E0EBB4E00E5FE23 /* Build configuration list for PBXProject "SafariViewController" */ = {
+		D1CFD5B11E0EBB4E00E5FE23 /* Build configuration list for PBXProject "SafariViewControllerDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D1CFD5C61E0EBB4E00E5FE23 /* Debug */,
@@ -295,13 +298,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D1CFD5C81E0EBB4E00E5FE23 /* Build configuration list for PBXNativeTarget "SafariViewController" */ = {
+		D1CFD5C81E0EBB4E00E5FE23 /* Build configuration list for PBXNativeTarget "SafariViewControllerDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D1CFD5C91E0EBB4E00E5FE23 /* Debug */,
 				D1CFD5CA1E0EBB4E00E5FE23 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -23,8 +23,13 @@ class ViewController: UIViewController {
 
 	@IBAction func openSafari(_ sender: Any) {
 		let url = URL(string: "https://www.google.com")
-		let safariVC = SFSafariViewController(url: url!)
-		self.present(safariVC, animated: true, completion: nil)
+		
+		// Open Safari by opening up the actual app
+		UIApplication.shared.openURL(url!)
+		
+		// Embed Safari inside the app
+//		let safariVC = SFSafariViewController(url: url!)
+//		self.present(safariVC, animated: true, completion: nil)
 	}
 
 }

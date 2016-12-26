@@ -1,3 +1,0 @@
-# iOS Extension
-
-### Share Extension

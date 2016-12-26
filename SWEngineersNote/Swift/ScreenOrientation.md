@@ -1,9 +1,13 @@
-# Screen Orientation
+## Screen Orientation
 
-### Using `UIScrollView` and embed contentView (`UIView`)
+#### If you do not want to allow transition
+1. Click on the project inside Project Navigator
+2. Targets > General > Device Orientation, selecte the modes you want to support
+
+<!-- #### Using `UIScrollView` and embed contentView (`UIView`) -->
 
 
-### Using `willTransition` Function
+#### Using `willTransition` Function
 
 **Code Example**
 ```
@@ -21,5 +25,5 @@
 	}
 ```
 
-### Reference
-https://www.youtube.com/watch?v=YY06LNJ1mGY
+#### Reference
+[Youtube - Let's build that app](https://www.youtube.com/watch?v=YY06LNJ1mGY)
