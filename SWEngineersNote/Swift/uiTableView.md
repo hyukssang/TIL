@@ -13,12 +13,12 @@
 
 ##### Removing empty space before the tableview when used with a Navigation controller
 
-**Using Interface Builder**
-1. Select the view controller
-2. Open `Attributes` inspector
-3. Uncheck `Adjust scroll view insets`
+- **Using Interface Builder**
+	1. Select the view controller
+	2. Open `Attributes` inspector
+	3. Uncheck `Adjust scroll view insets`
 
-**Programmatically**
+- **Programmatically**
 ```
 self.automaticallyAdjustsScrollViewInsets = false
 ```
