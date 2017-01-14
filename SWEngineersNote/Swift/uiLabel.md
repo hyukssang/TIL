@@ -16,3 +16,9 @@ with attributes set and append it to the string you created at step 1:
 	let underlinedString = NSAttributedString(string: originalString, attributes: [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue])
 	allText.append(underlinedString)
 	```
+
+3. Assign the string to `attributedText` property of a `UILabel`
+
+	```
+	label.attributedText = allText
+	```
