@@ -1,4 +1,4 @@
-# JS - Values & Types
+# JS: Values & Types
 
 ## Built-in Types
 The following built in types are available:

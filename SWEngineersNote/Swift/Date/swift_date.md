@@ -184,3 +184,6 @@ newDateComponents.month = monthsToAdd
 newDateComponents.day = daysToAdd
 calculatedDate = Calendar.current.date(byAdding: newDateComponents, to: currentDate)
 ```
+
+## Reference
+- [Appcoda: NSDate](http://appcoda.com/nsdate/)
