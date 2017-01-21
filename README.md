@@ -2,18 +2,28 @@
 
 ## Folders
 
-#### AceThatInterview
+### AceThatInterview
 > Where I keep notes on Interview materials
 
-#### SWEngineersNote
+### SWEngineersNote
 > Where I keep notes on Programming
 
 ### Tutorials
 > Where I keep files used for tutorials
 
 ## Learning Log
-01/17/17
+### 01/17/17
 - React: background
 - RxSwift:
 	- Followed [tutorial](http://irekasoft.com/blog/todo-list-with-realm-swift)
 	- Learned how to read from and write to Realm database
+
+### 01/18/17
+- React: JSX and props
+- Swift: Date, Part1
+
+### 01/19/17
+- JS: types and values in-depth
+
+### 01/20/17
+- Swift: Date, Part2
