@@ -37,5 +37,18 @@ If you try to access a variable's value in a scope where it's not available, you
 #### `let` and Block Scoping
 In addition to creating declarations for variables at the function level, ES6 lets you declare variables to belong to individual blocks (pairs of { .. }), using the `let` keyword. Block scoping is very useful for managing your variable scopes in a more fine-grained fashion, which can make your code much easier to maintain over time.
 
+## Strict Mode
+Strict mode disallows the implicit auto-global variable declaration from omitting the `var`:
+```javascript
+function foo() {
+    "use strict";   // turn on strict mode
+    a = 1;          // `var` missing, ReferenceError
+}
+
+foo();
+```
+
+Strict mode is applied to the block containing `"use strict";` and any lower/inner scopes.
+
 ## Reference
 - [You Don't Know JS: Chapter 2](https://github.com/getify/You-Dont-Know-JS/blob/master/up%20%26%20going/ch2.md)
