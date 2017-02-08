@@ -1,8 +1,8 @@
-# UILabel
+# Swift: `UILabel`
 
-### Useful Tips
+## Tricks
 
-##### Underlining a part of text
+### Underlining a part of text
 1. Create an instance of NSMutableAttributedString to store the whole text
 
 	```
@@ -22,3 +22,18 @@ with attributes set and append it to the string you created at step 1:
 	```
 	label.attributedText = allText
 	```
+	
+
+### Make font bold
+
+#### Method #1
+Use font property of UILabel
+```swift
+label.font = UIFont(name:"HelveticaNeue-Bold", size: 16.0)
+```
+
+#### Method #2
+Use default system font to bold text
+```swift
+label.font = UIFont.boldSystemFontOfSize(16.0)
+```

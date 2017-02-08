@@ -2,8 +2,9 @@
 ## View Rendering Hierarchy
 
 
-## Shadowing Technique
-### The Naive Way
+## Tricks
+### Shadowing
+#### The Naive Way
 ```swift
 view.layer.shadowColor = UIColor.black.cgColor
 view.layer.shadowOffset = CGSize(width: 3, height: 3)
@@ -13,8 +14,8 @@ view.layer.shadowRadius = 4.0
 
 Shadowing this way can be very expensive in terms of performance. Also, shadow layer might get cut off if masking is used on the view.
 
-### Better ways
-#### What if there are sublayers or subviews whose content we want to clip to the bounds of our view?
+#### Better ways
+##### What if there are sublayers or subviews whose content we want to clip to the bounds of our view?
 ```swift
 // add the shadow to the base view
 baseView.backgroundColor = UIColor.clear
@@ -39,10 +40,11 @@ otherSubContent.frame = borderView.bounds
 borderView.addSubview(otherSubContent)
 ```
 
-#### Better Performance
+##### Better Performance
 Use a pre-defined path for the shadow and specify it to be rasterized.
 
 ```swift
+// Still needs shadowColor, shadowOffset, shadowOpacity props set up
 baseView.layer.shadowPath = UIBezierPath(roundedRect: baseView.bounds, cornerRadius: 10).cgPath
 baseView.layer.shouldRasterize = true
 baseView.layer.rasterizationScale = UIScreen.main.scale

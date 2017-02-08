@@ -128,7 +128,6 @@ newDateComponents.day = daysToAdd
 calculatedDate = Calendar.current.date(byAdding: newDateComponents, to: currentDate)
 
 // Testing
-var testDate = "01-01-2017"
-dateFormatter.dateFormat = "MM-dd-yyyy"
-var date = dateFormatter.date(from: testDate)
-calculatedDate = Calendar.current.date(byAdding: newDateComponents, to: date!)
+let testDate = Date()
+let currentMonthComponents = Calendar.current.dateComponents([.year, .month], from: testDate)
+Calendar.current.date(from: currentMonthComponents)
