@@ -27,3 +27,19 @@
 
 ### 01/20/17
 - Swift: Date, Part2
+- JS: variables review
+
+### 01/23/17
+- JS: strict mode, conditionals, functions review
+
+### 01/24/17
+- Web: Cookie & Session
+
+### 01/25/17
+- Python: pyenv
+
+### 01/31/17
+- Swift: UIView shadowing technique
+
+### 02/08/17
+- Interview: Tree review
