@@ -1,6 +1,10 @@
 # RxSwift Writes
 
-### Creating Objects
+## Note
+Realm data models are defined using regular Swift classes with properties. Simply subclass Object or an existing model class to create your Realm data model objects. Realm model objects mostly function like any other Swift objects - you can add your own methods and protocols to them and use them like you would any other object. The main restriction is that you can only use an object on the thread which it was created.
+
+## Creating Objects
+
 1. Define a model
 
 	```
@@ -25,7 +29,9 @@
 	let myThirdDog = Dog(value: ["Fido", 5])
 	```
 
-### Adding Objects
+**!!!** Since Realm parses all models defined in your code at launch, they must all be valid, even if they are never used.
+
+## Adding Objects
 
 ```
 // Create a Person object
@@ -43,9 +49,8 @@ try! realm.write {
 }
 ```
 
-### Updating Objects
-
-#### Typed Updates
+## Updating Objects
+### Typed Updates
 ```
 // Update an object with a transaction
 try! realm.write {
@@ -53,7 +58,7 @@ try! realm.write {
 }
 ```
 
-#### Creating and Updating Objects With Primary Keys
+### Creating and Updating Objects With Primary Keys
 ```
 // Creating a book with the same primary key as a previously saved book
 let cheeseBook = Book()
@@ -78,6 +83,10 @@ try! realm.write {
   // the book's `title` property will remain unchanged.
 }
 ```
+
+## Limitations
+Realm supports the following property types: `Bool`, `Int8`, `Int16`, `Int32`, `Int64`, `Double`, `Float`, `String`, `NSDate`, and `NSData`.
+
 
 ## Reference
 - [Realm Official Documentation](https://realm.io/docs/swift/latest)

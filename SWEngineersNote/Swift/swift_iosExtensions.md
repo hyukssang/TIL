@@ -1,13 +1,13 @@
 # iOS Extension
 
-### Share Extension
+## Share Extension
 
-##### Creating an Extension for the First Time
+### Creating an Extension for the First Time
 Click on the project on *Project Navigator* and create a new extension by hitting **New > File > Target > {Extension of your choice}**
 
 By default, the extension contains a view with two buttons *Cancel* and *Post* on the navigation bar, *textarea* in the middle, and *table cells* (`configurationItems`) on the bottom.
 
-##### Accessing a Webpage
+### Accessing a Webpage
 In Share extensions (on both platforms) and Action extensions (iOS only), you can:
 - Give users access to web content by asking Safari to run a JavaScript file and return the results to the extension
 - Use the JavaScript file to access a webpage before your extension runs (on both platforms)
@@ -88,7 +88,7 @@ override func viewDidLoad() {
 }
 ```
 
-##### Adding Table cells at the bottom: `configurationItems`
+### Adding Table cells at the bottom: `configurationItems`
 
 Override the given func `configurationItems()`
 1. For each item(cell), declare `SLComposeSheetConfigurationItem`
@@ -118,9 +118,9 @@ override func configurationItems() -> [Any]! {
 }
 ```
 
-##### Finishing Up
+### Finishing Up
 
 Implement `didSelectPost()`
 
-### Reference
+## Reference
 [Apple App Extension Guide](https://developer.apple.com/library/content/documentation/General/Conceptual/ExtensibilityPG/ExtensionScenarios.html#//apple_ref/doc/uid/TP40014214-CH21-SW8)

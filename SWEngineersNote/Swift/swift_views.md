@@ -1,5 +1,12 @@
 # Swift: Views
-## View Rendering Hierarchy
+## View Rendering Order
+
+- `didSet{}`
+
+- `viewDidLoad`
+	- Views' actual sizes may change, as layout hasn't happened yet
+
+- `viewDidLayoutSubviews`
 
 
 ## Tricks
