@@ -84,6 +84,20 @@ try! realm.write {
 }
 ```
 
+## Removing Objects
+### Removing Realm database file
+```swift
+NSFileManager.defaultManager().removeItemAtURL(Realm.Configuration.defaultConfiguration.fileURL!)
+```
+
+### Preserving Realm, but remove objects
+```swift
+let realm = try! Realm()
+try! realm.write {
+  realm.deleteAll()
+}
+```
+
 ## Limitations
 Realm supports the following property types: `Bool`, `Int8`, `Int16`, `Int32`, `Int64`, `Double`, `Float`, `String`, `NSDate`, and `NSData`.
 
