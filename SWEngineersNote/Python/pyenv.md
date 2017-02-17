@@ -55,4 +55,4 @@ $ pyenv global 3.6.0
 #### Using Homebrew: 
 ```bash
 $ brew upgrade pyenv
-```
+`
