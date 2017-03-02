@@ -41,6 +41,8 @@ A binary tree that is both full and complete
 
 
 ## Binary Tree Traversal
+Note that these are a form of DFS!
+
 ### In-Order Traversal
 Visit in order of **left - current - right** nodes
 
@@ -109,3 +111,6 @@ A trie is a variant of n-ary tree in which characters are stored at each node. E
 A trie is often used to store the entire English language for quick prefix lookups. While a hash table can quickly look up whether a string is a valid word, it cannot tell us if a string is a prefix of any valid words. 
 
 O(n) time, where n is the length of a string
+
+## Reference
+- Cracking the Coding Interview by Gayle LaakMann McDowell

@@ -43,3 +43,22 @@
 
 ### 02/08/17
 - Interview: Tree review
+
+### 02/09/17
+- Swift: View rendering order
+- RxSwift: More on Read/Write
+
+### 02/10/17
+- RxSwift: How to reset Realm Database
+
+### 02/11/17
+- Python: Basics review
+
+### 02/17/17
+- CSS: Centering Elements
+- Bootstrap: Centering odd number of columns
+
+### 03/02/17
+- Interview: Graph, Bit Manipulation
+- JS: this operator, Prototype basics 
+- Python: Revisited the regular expression library
