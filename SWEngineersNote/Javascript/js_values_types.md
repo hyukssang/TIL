@@ -9,14 +9,66 @@ The following built in types are available:
 - `object`
 - `symbol` (new to ES6)
 
+### Examining Types of Values
+In JavaScript, variables don't have types - values have types. Variables can hold any value, at any time.
+
 To examine a value, use `typeof` operator. It always returns one of the seven values in string:
 ```javascript
 var a;
 typeof a;       // "undefined"
+
+// All evaluates to true
+typeof undefined === "undefined";
+typeof true === "boolean";
+typeof 42 === "number";
+typeof "42" === "string";
+typeof { life: 42 } === "object";
+typeof Symbol() === "symbol";
 ```
 Note that **`typeof` examines the type of the value in a variable**, not the type of a variable.
 
-**!** `typeof null` is an interesting case, because it errantly returns `object`, not `null`
+#### Special cases
+##### `null`
+`typeof null` is an interesting case, because it errantly returns `object`, not `null`.
+``` javascript
+typeof null === "object"; // true
+```
+
+If you want to test for `null` value using its type, you need a compound condition:
+```js
+var a = null;
+(!a && typeof a === "object"); // true
+```
+
+##### undefined vs undeclared
+Variables that have no value *currently* actually have the `undefined` value. An "undefined" variable is one that has been declared in the accessible scope, but *at the moment* has no other value in it. By contrast, an "undeclared" variable is one that has not been formally declared in the accessible scope. 
+
+Consider:
+```js
+var a;
+a; // undefined
+b; // undeclared, ReferenceError: b is not defined
+```
+
+The `typeof` will return `"undefined"` even for `"undeclared"` variables. To check for undeclared, use safety guard feature using `typeof`:
+```js
+// This would throw an error!
+if(DEBUG){
+	console.log("Debugging is starting");
+}
+
+// This is a safe existence check
+if(typeof DEBUG !== "undefined"){
+	console.log("Debugging is starting");
+}
+```
+
+This sort of check is useful even if you're not dealing with user-defined variables like `DEBUG`. If you are doing a feature check for a built-in API, you may find it helpful to check without throwing an error: 
+```js
+if(typeof atob === "undefined"){
+	atob = function(){ };  // Define if not defined already
+}
+```
 
 ### Objects
 The `object` type refers to a compound value where you can set properties (named locations) that each hold their own values of any type.
@@ -40,8 +92,7 @@ obj[key];   // "hello world"
 ```
 
 #### Array
-An array is an **`object`** that holds values (of any type) not particularly in named properties/keys, but rather in numerically indexed positions.
-
+An array is an **`object`** that holds values (of any type, from `string` to `number` to `object` to even another `array`) not particularly in named properties/keys, but rather in numerically indexed positions. 
 ```javascript
 var arr = [
     "hello world",
@@ -57,12 +108,45 @@ arr.length;     // 3
 typeof arr;     // "object"
 ```
 
+You don't need to presize your `array`s, you can just declare them and add values as you see fit:
+```js
+var a = [];
+a[0] = 1;
+a[1] = "2";
+```
+
 Because arrays are special objects (as `typeof` implies), they can also have properties, including the automatically updated `length` property.
+
+If you create a "sparse" `array`, it would have `undefined` value in between:
+```js
+var a = [];
+a[0] = 1;
+a[2] = [3];
+
+a[1];     // undefined
+a.length; // 3
+```
 
 You theoretically could use an array as a normal object with your own named properties, or you could use an object but only give it numeric properties (0, 1, etc.) similar to an array. However, this would generally be considered improper usage of the respective types.
 
+Also, be careful not to use a number `string` value as a key for an `array`. The key can be coerced to a standard base-10 `number`, then assume that you wanted to use it as a `number` index rather than as a `string` key.
+```js
+var a = [];
+a["13"] = 42;
+a.length; // 14
+```
+
 #### Functions
 Functions are a subtype of `object`s -- `typeof` returns "function", which implies that a function is a main type -- and can thus have properties, but you typically will only use function object properties (like foo.bar) in limited cases.
+
+> More specifically, a function is referred to as a "callable object" -  an object that has an internal [[Call]] property that allows it to be invoked. 
+
+An example of a function property would be `length` property, which is set to the number of formal parameters it is declared with:
+```js
+function a(b,c){
+}
+a.length; // 2
+```
 
 ## Built-In Type Methods
 When we use properties and methods defined on a type, we are actually using properties and methods defined on a object wrapper such as `String`, `Number`, and `Boolean`. JS automatically "boxes" the value to respective object wrapper by default.
