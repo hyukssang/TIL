@@ -136,6 +136,24 @@ a["13"] = 42;
 a.length; // 14
 ```
 
+##### Array-Likes
+There will be occasions where you need to convert an `array`-like value (a numerically indexed collection of values) into a true `array`, so you can call array utilities such as `indexOf`, `concat`, and so on. 
+
+One common way to achieve this is to borrow the `slice(..)` utility against the value:
+```js
+function foo(){
+	var arr = Array.prototype.slice.call(arguments);
+	arr.push("bam");
+	console.log(arr);
+}
+foo("bar", "bag"); // ["bar", "bar", "bam"]
+```
+
+Another way is to use `Array.from(..)`, introduced in ES6:
+```js
+var arr = Array.from(arguments);
+```
+
 #### Functions
 Functions are a subtype of `object`s -- `typeof` returns "function", which implies that a function is a main type -- and can thus have properties, but you typically will only use function object properties (like foo.bar) in limited cases.
 
@@ -147,6 +165,43 @@ function a(b,c){
 }
 a.length; // 2
 ```
+
+### Strings
+JavaScript `string`s are really not the same as `array`s of characters. Here are the differences:
+- JavaScript `string`s are immutable, while arrays are quite mutable. 
+	```js
+	var a = "foo";
+	var b = ["f", "o", "o"];
+	
+	a[1] = "0";
+	b[1] = "0";
+	
+	a; // "foo"
+	b; // ["f", "0", "o"]
+	```
+- The character position access form using subscripting (ex. `a[1]`) was not always widely valid JavaScript. Instead, the *correct* approach has been `a.charAt(1)`.
+- None of the `string` methods that alter its contents can modify in-place, but rather must create and return new `string`s. By contrast, many of the array methods that change array contents actually *do* modify in-place.
+- Many of the `array` methods that could be helpful when dealing with `string`s are not actually available for them, but we can "borrow" non mutation `array` methods agains our `string:
+	```js
+	var c = Array.prototype.join.call(a, "-");
+	var d = Array.prototype.map.call(a, function(v){
+		return v.toUpperCase() + ".";
+	}).join("");
+	
+	c; // "f-o-o"
+	d; // "F.0.0."
+	```
+	However, "borrowing" doesn't work with `array` mutators, because `string`s are immutable and thus can't be modified in place.
+	
+	Another workaround is to convert the `string` into an `array`, perform the desired operation, then convert it back to a `string`.
+	```js
+	var c = a.split("").reverse().join("");
+	c; // "off"
+	```
+	
+	**!!!** Note that this approach doesn't work for `string`s with complex (unicode) characters.
+	
+	If you are more commonly doing tasks on your "strings" that treat them as basically arrays of characters, it might be better to actually just store them as `array`s rather than as `string`s.
 
 ## Built-In Type Methods
 When we use properties and methods defined on a type, we are actually using properties and methods defined on a object wrapper such as `String`, `Number`, and `Boolean`. JS automatically "boxes" the value to respective object wrapper by default.
