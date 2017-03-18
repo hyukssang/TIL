@@ -62,3 +62,15 @@
 - Interview: Graph, Bit Manipulation
 - JS: this operator, Prototype basics 
 - Python: Revisited the regular expression library
+
+### 03/03/17
+- Interview: Logical Questions and Math
+
+### 03/06/17
+- GitHub Pages and Jekyll Setup
+
+### 03/09/17
+- Swift: How to keep trailing decimal 0's for Double values
+
+### 03/17/17
+- JS: More on types
