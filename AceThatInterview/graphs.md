@@ -35,7 +35,7 @@ For demonstration of the graph searches visit: [Visualgo](https://visualgo.net/)
 ### Depth First Search (DFS)
 We start at the root (or arbitrarily selected node) and explore each branch completely before moving onto the next branch.
 
-Preferred if we want to visit every node in the graph
+Preferred if we want to **visit every node** in the graph
 
 Pseudocode for DFS:
 ```
@@ -55,7 +55,7 @@ void search(Node root){
 ### Breadth First Search (BFS)
 We start at the root (or another arbitrarily selected node) and explore each neighbor before going on to any of their children.
 
-Preferred if we want to find the shortest path (or just any path) between two nodes. 
+Preferred if we want to find the **shortest path (or just any path)** between two nodes. 
 
 Pseudocode for BFS (Many people falsely assume that BFS is recursive. It's not. It uses a queue):
 ```
@@ -78,7 +78,7 @@ void search(Node root){
 ```
 
 ### Bidirectional Search
-Bidirectional Search is used to find the shortest path between a source and destination node. It operates by essentially running two simultaneous BFS, one from each node. When the two paths collide, we have found a path.
+Bidirectional Search is used to find the shortest path between a source and destination node. It operates by essentially running **two simultaneous BFS**, one from each node. When the two paths collide, we have found a path.
 
 #### Run time 
 In traditional BFS, we would search up to k nodes in the first level of the search. In the second level, we would search up to k nodes for each of those first k nodes. so k^2 nodes total. We would do this for d times, so that's O(k^d) nodes.
